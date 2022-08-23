@@ -66,3 +66,39 @@ var sortedSquares = function(nums) {
   }
   return arr;
 };
+
+/*
+Find the Middle Index in Array
+
+Given a 0-indexed integer array nums, find the leftmost middleIndex (i.e., the smallest amongst all the possible ones).
+A middleIndex is an index where nums[0] + nums[1] + ... + nums[middleIndex-1] == nums[middleIndex+1] + nums[middleIndex+2] + ... + nums[nums.length-1].
+If middleIndex == 0, the left side sum is considered to be 0. Similarly, if middleIndex == nums.length - 1, the right side sum is considered to be 0.
+
+Return the leftmost middleIndex that satisfies the condition, or -1 if there is no such index.
+
+Constraints:
+1 <= nums.length <= 100
+-1000 <= nums[i] <= 1000
+
+@param {number[]} nums
+@return {number}
+ */
+
+
+var findMiddleIndex = function(nums) {
+  let pivot = 0;
+  let sumL = 0;
+  let sumR = nums.reduce((a, b) => a + b) - nums[0];
+  if (sumR === 0){
+      return 0;
+  }
+  while (pivot < nums.length - 1){
+      pivot ++;
+      sumL += nums[pivot - 1];
+      sumR -= nums[pivot];
+      if (sumL === sumR){
+          return pivot;
+      }
+  }
+  return -1;
+};

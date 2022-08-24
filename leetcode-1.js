@@ -48,21 +48,21 @@ maximize with O(n) time complexity
 @return {number[]}
  */
 
-var sortedSquares = function(nums) {
+var sortedSquares = function (nums) {
 
   let i = 0;  //start from negative nums
   let j = nums.length - 1;  //start from positive nums
   let arr = new Array(nums.length);   //set up new array to store squared number, space complexity O(n)
-  
+
   // compare until intersection of negative/positive nums
-  while (i <= j){
-      if (nums[j] * nums[j] > nums[i] * nums[i]){   // add and shift if square of negative number is larger
-          arr[j - i] = (nums[j] * nums[j]);
-          j --;
-      } else {    //add and shift if squared of positive is larger or equal
-          arr[j - i] = (nums[i] * nums[i]);   
-          i ++;
-      }
+  while (i <= j) {
+    if (nums[j] * nums[j] > nums[i] * nums[i]) {   // add and shift if square of negative number is larger
+      arr[j - i] = (nums[j] * nums[j]);
+      j--;
+    } else {    //add and shift if squared of positive is larger or equal
+      arr[j - i] = (nums[i] * nums[i]);
+      i++;
+    }
   }
   return arr;
 };
@@ -85,20 +85,20 @@ Constraints:
  */
 
 
-var findMiddleIndex = function(nums) {
+var findMiddleIndex = function (nums) {
   let pivot = 0;
   let sumL = 0;
-  let sumR = nums.reduce((a, b) => a + b) - nums[0];
-  if (sumR === 0){
-      return 0;
+  let sumR = nums.reduce((a,b) => a + b) - nums[0];
+  if (sumR === 0) {
+    return 0;
   }
-  while (pivot < nums.length - 1){
-      pivot ++;
-      sumL += nums[pivot - 1];
-      sumR -= nums[pivot];
-      if (sumL === sumR){
-          return pivot;
-      }
+  while (pivot < nums.length - 1) {
+    pivot++;
+    sumL += nums[pivot - 1];
+    sumR -= nums[pivot];
+    if (sumL === sumR) {
+      return pivot;
+    }
   }
   return -1;
 };
@@ -153,33 +153,33 @@ n == mat[i].length
 @return {number[]}
 */
 
-var findDiagonalOrder = function(mat) {
+var findDiagonalOrder = function (mat) {
   let arr = [];
   let i = 0;
   let j = 0;
   let m = mat[0].length - 1;
   let n = mat.length - 1;
-  while(i !== m || j !== n){
-      arr.push(mat[j][i]);
-      if ((i + j) % 2) {      // goes down
-          if(j === n){
-              i ++;
-          } else if (i === 0){
-              j ++;
-          } else {
-              i --;
-              j ++;
-          }
-      } else {        //goes up
-          if(i === m){
-              j ++;
-          } else if (j === 0){
-              i ++;
-          } else {
-              i ++;
-              j --;
-          }
-      } 
+  while (i !== m || j !== n) {
+    arr.push(mat[j][i]);
+    if ((i + j) % 2) {      // goes down
+      if (j === n) {
+        i++;
+      } else if (i === 0) {
+        j++;
+      } else {
+        i--;
+        j++;
+      }
+    } else {        //goes up
+      if (i === m) {
+        j++;
+      } else if (j === 0) {
+        i++;
+      } else {
+        i++;
+        j--;
+      }
+    }
   }
   arr.push(mat[j][i]);
   return arr;
@@ -201,7 +201,7 @@ n == matrix[i].length
 @return {number[]}
 */
 
-var spiralOrder = function(matrix) {
+var spiralOrder = function (matrix) {
   let arr = [];
   let mb = 0; //min of i
   let nb = 0; //min of j
@@ -251,18 +251,49 @@ Constraints:
 @return {number[][]}
 */
 
-var generate = function(numRows) {
+var generate = function (numRows) {
   let arr = []
-  for (let i = 0; i< numRows; i++){
-      for (let j = 0; j <= i; j++){
-          if (j === 0){
-              arr.push([1]);
-          } else if (j === i){
-              arr[i].push(1);
-          } else {
-              arr[i].push(arr[i-1][j] + arr[i-1][j-1]);
-          }
+  for (let i = 0; i < numRows; i++) {
+    for (let j = 0; j <= i; j++) {
+      if (j === 0) {
+        arr.push([1]);
+      } else if (j === i) {
+        arr[i].push(1);
+      } else {
+        arr[i].push(arr[i - 1][j] + arr[i - 1][j - 1]);
       }
+    }
   }
   return arr;
+};
+
+/*
+Add Binary
+Given two binary strings a and b, return their sum as a binary string.
+
+@param {string} a
+@param {string} b
+@return {string}
+*/
+
+var addBinary = function (a,b) {
+  let long = (a.length >= b.length) ? a : b;
+  let short = (a.length < b.length) ? a : b;
+
+  long = long.split('').reverse();
+  short = short.split('').reverse();
+
+  for (let i = 0; i < short.length; i++) {
+    long[i] = Number(long[i]) + Number(short[i]);
+  }
+  for (let i = 0; i < long.length; i++) {
+    if (long[i] === 2) {
+      long[i] = '0';
+      long[i + 1] = Number(long[i + 1]) + 1 || '1';
+    } else if (long[i] === 3) {
+      long[i] = '1';
+      long[i + 1] = Number(long[i + 1]) + 1 || '1';
+    }
+  }
+  return long.reverse().join('');
 };

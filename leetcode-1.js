@@ -240,3 +240,29 @@ var spiralOrder = function(matrix) {
   return arr;
 };
 
+/*
+Pascal's Triangle
+Given an integer numRows, return the first numRows of Pascal's triangle.
+
+Constraints:
+1 <= numRows <= 30
+
+@param {number} numRows
+@return {number[][]}
+*/
+
+var generate = function(numRows) {
+  let arr = []
+  for (let i = 0; i< numRows; i++){
+      for (let j = 0; j <= i; j++){
+          if (j === 0){
+              arr.push([1]);
+          } else if (j === i){
+              arr[i].push(1);
+          } else {
+              arr[i].push(arr[i-1][j] + arr[i-1][j-1]);
+          }
+      }
+  }
+  return arr;
+};

@@ -104,6 +104,7 @@ var findMiddleIndex = function(nums) {
 };
 
 /*
+Plus One
 You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. 
 The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
 Increment the large integer by one and return the resulting array of digits.
@@ -136,6 +137,7 @@ var plusOne = function (digits) {
   return digits;
 };
 /*
+Diagonal Tranverse
 Given an m x n matrix mat, return an array of all the elements of the array in a diagonal order.
 Input: mat = [[1,2,3],[4,5,6],[7,8,9]]
 Output: [1,2,4,7,5,3,6,8,9]
@@ -182,3 +184,59 @@ var findDiagonalOrder = function(mat) {
   arr.push(mat[j][i]);
   return arr;
 };
+
+/*
+Spiral Matrix
+Given an m x n matrix, return all elements of the matrix in spiral order.
+Input: matrix = [[1,2,3],[4,5,6],[7,8,9]]
+Output: [1,2,3,6,9,8,7,4,5]
+
+Constraints:
+m == matrix.length
+n == matrix[i].length
+1 <= m, n <= 10
+-100 <= matrix[i][j] <= 100
+
+@param {number[][]} matrix
+@return {number[]}
+*/
+
+var spiralOrder = function(matrix) {
+  let arr = [];
+  let mb = 0; //min of i
+  let nb = 0; //min of j
+  let me = matrix.length - 1;  // max of i
+  let ne = matrix[0].length - 1;   // max of j
+  while (mb <= me && nb <= ne) {
+    for (let i = nb; i <= ne; i++) {
+      arr.push(matrix[mb][i]);
+    }
+    if (mb > me || nb > ne) {
+      break;
+    }
+    mb++;
+    for (let i = mb; i <= me; i++) {
+      arr.push(matrix[i][ne]);
+    }
+    ne--;
+    if (mb > me || nb > ne) {
+      break;
+    }
+    for (let i = ne; i >= nb; i--) {
+      arr.push(matrix[me][i])
+    }
+    me--;
+    if (mb > me || nb > ne) {
+      break;
+    }
+    for (let i = me; i >= mb; i--) {
+      arr.push(matrix[i][nb]);
+    }
+    nb++;
+    if (mb > me || nb > ne) {
+      break;
+    }
+  }
+  return arr;
+};
+

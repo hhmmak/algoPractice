@@ -297,3 +297,38 @@ var addBinary = function (a,b) {
   }
   return long.reverse().join('');
 };
+
+/*
+Implement strStr()
+Given two strings needle and haystack, return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+Constraints:
+1 <= haystack.length, needle.length <= 104
+haystack and needle consist of only lowercase English characters.
+
+time complexity O(n * m) space complexity O(1)
+
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+*/
+
+var strStr = function (haystack,needle) {
+
+  let exist = false;
+  for (let i = 0; i < haystack.length; i++) {
+    if (haystack[i] === needle[0]) {
+      exist = true;
+      for (let j = 1; j < needle.length; j++) { //check if whole needle matches without changing starting index - prevent partial needle match duplicate within haystack
+        if (haystack[i + j] !== needle[j]) {
+          exist = false;
+          break;
+        }
+      }
+      if (exist) {
+        return i;
+      }
+    }
+  }
+  return -1;
+};

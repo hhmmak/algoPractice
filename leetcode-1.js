@@ -369,4 +369,22 @@ var minSubArrayLen = function(target, nums) {
   
   return amount; 
 }
-  
+
+/*
+Rotate Array
+Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+Constraints:
+1 <= nums.length <= 105
+-231 <= nums[i] <= 231 - 1
+0 <= k <= 105
+
+@param {number[]} nums
+@param {number} k
+@return {void} Do not return anything, modify nums in-place instead.
+*/
+
+var rotate = function(nums, k) {
+  let shiftNums = nums.splice(nums.length - (k % nums.length));
+  nums.splice(0,0,...shiftNums);
+};

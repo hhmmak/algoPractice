@@ -240,8 +240,11 @@ var spiralOrder = function (matrix) {
   return arr;
 };
 
+/** 
+ * .. Pascal Triangle 
+*/
+
 /*
-Pascal's Triangle
 Given an integer numRows, return the first numRows of Pascal's triangle.
 
 Constraints:
@@ -265,6 +268,33 @@ var generate = function (numRows) {
     }
   }
   return arr;
+};
+
+/*
+Given an integer rowIndex, return the rowIndexth (0-indexed) row of the Pascal's triangle.
+
+Constraints:
+0 <= rowIndex <= 33
+
+@param {number} rowIndex
+@return {number[]}
+
+Time complexity O(n) Space complexity O(n)
+*/
+
+var getRow = function(rowIndex) {
+  if (rowIndex === 0){
+    return [1];
+  }
+  let row = getRow(rowIndex - 1);
+  let valueBefore = row[0];
+  for (let i = 1; i < rowIndex; i++){
+    let valueNow = row[i];
+    row[i] = valueBefore + valueNow;
+    valueBefore = valueNow;
+  }
+  row.push(1);
+  return row;
 };
 
 /*

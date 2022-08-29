@@ -418,3 +418,35 @@ var rotate = function(nums, k) {
   let shiftNums = nums.splice(nums.length - (k % nums.length));
   nums.splice(0,0,...shiftNums);
 };
+
+/*
+Remove Duplicates from Sorted Array
+
+Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. 
+The relative order of the elements should be kept the same.
+
+Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
+
+Constraints:
+1 <= nums.length <= 3 * 104
+-100 <= nums[i] <= 100
+nums is sorted in non-decreasing order.
+
+@param {number[]} nums
+@return {number}
+*/
+
+var removeDuplicates = function(nums) {
+  let i = 0;
+  let k = 0;
+  while (i < nums.length) {
+      if (nums[i] === nums[k] ){
+          i ++;
+      } else {
+          nums[k + 1] = nums [i];
+          k ++;
+          i ++;
+      }
+  }
+  return k + 1;
+};

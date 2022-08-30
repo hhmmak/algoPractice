@@ -215,3 +215,32 @@ var twoSum = function(nums, target) {
     }
   }
 };
+
+/*
+Isomorphic Strings
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. 
+No two characters may map to the same character, but a character may map to itself.
+
+Constraints:
+1 <= s.length <= 5 * 104
+t.length == s.length
+s and t consist of any valid ascii character.
+*/
+
+var isIsomorphic = function(s, t) {
+  let mapS = {};
+  let mapT = {};
+  for (let i = 0; i < s.length; i ++){
+    //assign unique non-zero number to characters in same location, i.e. shift characters in same location to same reference number
+    mapS[s[i]] = mapS[s[i]] || i + 1;
+    mapT[t[i]] = mapT[t[i]] || i + 1;
+    if (mapS[s[i]] !== mapT[t[i]]) {
+      return false;
+    }
+  }
+  return true;
+};

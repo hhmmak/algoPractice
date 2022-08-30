@@ -115,3 +115,41 @@ var singleNumber = function(nums) {
     }
   }
 };
+
+/*
+Intersection of Two Arrays
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+(search for common values between two arrays)
+
+Constraints:
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 1000
+
+@param {number[]} nums1
+@param {number[]} nums2
+@return {number[]}
+
+Time Complexity O(n) Space Complexity O(n)
+*/
+
+var intersection = function(nums1, nums2) {
+  let map = {};
+  for (let value of nums1){
+    if (!map[value]){
+      map[value] = 1;
+    }
+  }
+  for (let value of nums2){
+    if (map[value]){
+      map[value] = 2;
+    }
+  }
+  
+  let arr = [];
+  for (let key in map){
+    if (map[key] === 2){
+      arr.push(key);
+    }
+  }
+  return arr;
+};

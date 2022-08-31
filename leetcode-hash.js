@@ -314,25 +314,49 @@ All the strings of list2 are unique.
 // };
 
 //second attempt
+// var findRestaurant = function(list1, list2) {
+//   let map = {};
+//   let min = list1.length + list2.length;
+//   let common = [];
+  
+//   list1.map((value, i) => map[value] = [i]);
+  
+  
+//   for (let i = 0; i < list2.length; i++){
+
+//     if (i < list2.length && map[list2[i]]){
+//       map[list2[i]].push(i);
+//     }
+
+//     if (map[list2[i]] && map[list2[i]].length === 2){
+//       if (map[list2[i]][0] + map[list2[i]][1] === min){
+//         common.push(list2[i]);
+//       } else if (map[list2[i]][0] + map[list2[i]][1] < min){
+//         min = map[list2[i]][0] + map[list2[i]][1];
+//         common = [list2[i]];
+//       }
+//     }
+  
+//   }
+//   return common;
+  
+// };
+
+//third attempt
 var findRestaurant = function(list1, list2) {
   let map = {};
   let min = list1.length + list2.length;
   let common = [];
   
-  list1.map((value, i) => map[value] = [i]);
+  list1.map((value, i) => map[value] = i);
   
-  
+
   for (let i = 0; i < list2.length; i++){
-
-    if (i < list2.length && map[list2[i]]){
-      map[list2[i]].push(i);
-    }
-
-    if (map[list2[i]] && map[list2[i]].length === 2){
-      if (map[list2[i]][0] + map[list2[i]][1] === min){
+    if (!isNaN(map[list2[i]])){
+      if (map[list2[i]] + i === min){
         common.push(list2[i]);
-      } else if (map[list2[i]][0] + map[list2[i]][1] < min){
-        min = map[list2[i]][0] + map[list2[i]][1];
+      } else if (map[list2[i]] + i < min){
+        min = map[list2[i]] + i;
         common = [list2[i]];
       }
     }

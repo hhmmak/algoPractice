@@ -265,44 +265,73 @@ All the strings of list2 are unique.
 @return {string[]}
 */
 
+//first attempt
+// var findRestaurant = function(list1, list2) {
+//   let map = {};
+//   let length = Math.max(list1.length, list2.length)
+//   let min = list1.length + list2.length;
+//   let common = [];
+//   for (let i = 0; i < length; i++){
+    
+//     if (i < list1.length && !map[list1[i]]){
+//       map[list1[i]] = [];
+
+//     }
+//     if (i < list2.length && !map[list2[i]]){
+//       map[list2[i]] = [];
+
+//     }    
+//     if (i < list1.length && map[list1[i]]){
+//       map[list1[i]].push(i);
+
+//     }
+//     if (i < list2.length && map[list2[i]]){
+//       map[list2[i]].push(i);
+//     }
+
+    
+//     if (i < list1.length && map[list1[i]].length === 2) {
+//       if (map[list1[i]][0] + map[list1[i]][1] === min){
+//         common.push(list1[i]);
+//       } else if (map[list1[i]][0] + map[list1[i]][1] < min){
+//         min = map[list1[i]][0] + map[list1[i]][1];
+//         common = [list1[i]];
+//       }
+//     }
+    
+//     if (i < list2.length && map[list2[i]].length === 2 && list1[i] !== list2[i]){
+//       if (map[list2[i]][0] + map[list2[i]][1] === min){
+//         common.push(list2[i]);
+//       } else if (map[list2[i]][0] + map[list2[i]][1] < min){
+//         min = map[list2[i]][0] + map[list2[i]][1];
+//         common = [list2[i]];
+//       }
+//     }
+  
+//   }
+//   return common;
+  
+// };
+
+//second attempt
 var findRestaurant = function(list1, list2) {
   let map = {};
-  let length = Math.max(list1.length, list2.length)
   let min = list1.length + list2.length;
   let common = [];
-  for (let i = 0; i < length; i++){
-    if (i < list1.length){}
-    
-    if (i < list1.length && !map[list1[i]]){
-      map[list1[i]] = [];
+  
+  list1.map((value, i) => map[value] = [i]);
+  
+  
+  for (let i = 0; i < list2.length; i++){
 
-    }
-    if (i < list2.length && !map[list2[i]]){
-      map[list2[i]] = [];
-
-    }    
-    if (i < list1.length && map[list1[i]]){
-      map[list1[i]].push(i);
-
-    }
     if (i < list2.length && map[list2[i]]){
       map[list2[i]].push(i);
     }
 
-    
-    if (i < list1.length && map[list1[i]].length === 2) {
-      if (map[list1[i]][0] + map[list1[i]][1] === min){
-        common.push(list1[i]);
-      } else if (map[list1[i]][0] + map[list1[i]][1] <= min){
-        min = map[list1[i]][0] + map[list1[i]][1];
-        common = [list1[i]];
-      }
-    }
-    
-    if (i < list2.length && map[list2[i]].length === 2 && list1[i] !== list2[i]){
+    if (map[list2[i]] && map[list2[i]].length === 2){
       if (map[list2[i]][0] + map[list2[i]][1] === min){
         common.push(list2[i]);
-      } else if (map[list2[i]][0] + map[list2[i]][1] <= min){
+      } else if (map[list2[i]][0] + map[list2[i]][1] < min){
         min = map[list2[i]][0] + map[list2[i]][1];
         common = [list2[i]];
       }

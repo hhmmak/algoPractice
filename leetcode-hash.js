@@ -171,45 +171,70 @@ Constraints:
 */
 
 //first attempt : hash map, count occurence
+// var intersect = function(nums1, nums2) {
+//   let arr = [];
+//   let map = {};
+//   for (let value of nums1){
+//     map[value] = (map[value] || 0) + 1;
+//   }
+
+//   for (let value of nums2){
+//     if (map[value]){
+//       arr.push(value);
+//       map[value] --;
+//     }
+//   }
+// return arr;
+// };
+
+// second attempt : sort first, two pointer 
+// var intersect = function(nums1, nums2) {
+//   nums1.sort((a,b) => a - b);
+//   nums2.sort((a,b) => a - b);
+//   let p1 = 0;
+//   let p2 = 0;
+//   let arr = [];
+  
+//   while (p1 < nums1.length && p2 < nums2.length){
+//     if (nums1[p1] === nums2[p2]){
+//       arr.push(nums1[p1]);
+//       p1 ++;
+//       p2 ++;
+//     } else if (nums1[p1] > nums2[p2]) {
+//       p2 ++;
+//     } else if (nums1[p1] < nums2[p2]) {
+//       p1 ++;
+//     }
+//   }
+//   return arr;
+// };
+
+// third attempt : check short array, faster runtime than attempt 1;
 var intersect = function(nums1, nums2) {
-  let arr = [];
+  let arr = []
   let map = {};
-  for (let value of nums1){
+  
+  let short = [...nums2];
+  let long = [... nums1];
+  if (nums1.length < nums2.length){
+    let short = [...nums1];
+    let long = [... nums2];
+  }
+  
+  for (let value of short){
     map[value] = (map[value] || 0) + 1;
   }
-
-  for (let value of nums2){
+  
+  for (let value of long) {
     if (map[value]){
       arr.push(value);
       map[value] --;
     }
   }
-return arr;
-};
-
-// second attempt : sort first, two pointer - fastest runtime & lowest memory
-var intersect = function(nums1, nums2) {
-  nums1.sort((a,b) => a - b);
-  nums2.sort((a,b) => a - b);
-  let p1 = 0;
-  let p2 = 0;
-  let arr = [];
   
-  while (p1 < nums1.length && p2 < nums2.length){
-    if (nums1[p1] === nums2[p2]){
-      arr.push(nums1[p1]);
-      p1 ++;
-      p2 ++;
-    } else if (nums1[p1] > nums2[p2]) {
-      p2 ++;
-    } else if (nums1[p1] < nums2[p2]) {
-      p1 ++;
-    }
-  }
   return arr;
 };
 
-// third attempt : check short
 
 
 /*

@@ -116,9 +116,12 @@ var singleNumber = function(nums) {
   }
 };
 
+/**
+*..Intersection of Two Arrays
+*/
+
 /*
-Intersection of Two Arrays
-Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be unique and you may return the result in any order.
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must be UNIQUE and you may return the result in any order.
 (search for common values between two arrays)
 
 Constraints:
@@ -153,6 +156,61 @@ var intersection = function(nums1, nums2) {
   }
   return arr;
 };
+
+/*
+Given two integer arrays nums1 and nums2, return an array of their intersection. 
+Each element in the result must appear AS MANY TIMES AS IT SHOWS in both arrays and you may return the result in any order.
+
+Constraints:
+1 <= nums1.length, nums2.length <= 1000
+0 <= nums1[i], nums2[i] <= 1000
+
+@param {number[]} nums1
+@param {number[]} nums2
+@return {number[]}
+*/
+
+//first attempt : hash map, count occurence
+var intersect = function(nums1, nums2) {
+  let arr = [];
+  let map = {};
+  for (let value of nums1){
+    map[value] = (map[value] || 0) + 1;
+  }
+
+  for (let value of nums2){
+    if (map[value]){
+      arr.push(value);
+      map[value] --;
+    }
+  }
+return arr;
+};
+
+// second attempt : sort first, two pointer - fastest runtime & lowest memory
+var intersect = function(nums1, nums2) {
+  nums1.sort((a,b) => a - b);
+  nums2.sort((a,b) => a - b);
+  let p1 = 0;
+  let p2 = 0;
+  let arr = [];
+  
+  while (p1 < nums1.length && p2 < nums2.length){
+    if (nums1[p1] === nums2[p2]){
+      arr.push(nums1[p1]);
+      p1 ++;
+      p2 ++;
+    } else if (nums1[p1] > nums2[p2]) {
+      p2 ++;
+    } else if (nums1[p1] < nums2[p2]) {
+      p1 ++;
+    }
+  }
+  return arr;
+};
+
+// third attempt : check short
+
 
 /*
 Happy Number

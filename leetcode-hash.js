@@ -244,3 +244,71 @@ var isIsomorphic = function(s, t) {
   }
   return true;
 };
+
+/*
+Minimum Index Sum of Two Lists
+
+Given two arrays of strings list1 and list2, find the common strings with the least index sum.
+A common string is a string that appeared in both list1 and list2.
+A common string with the least index sum is a common string such that if it appeared at list1[i] and list2[j] then i + j should be the minimum value among all the other common strings.
+Return all the common strings with the least index sum. Return the answer in any order.
+
+Constraints:
+1 <= list1.length, list2.length <= 1000
+1 <= list1[i].length, list2[i].length <= 30
+list1[i] and list2[i] consist of spaces ' ' and English letters.
+All the strings of list1 are unique.
+All the strings of list2 are unique.
+
+@param {string[]} list1
+@param {string[]} list2
+@return {string[]}
+*/
+
+var findRestaurant = function(list1, list2) {
+  let map = {};
+  let length = Math.max(list1.length, list2.length)
+  let min = list1.length + list2.length;
+  let common = [];
+  for (let i = 0; i < length; i++){
+    if (i < list1.length){}
+    
+    if (i < list1.length && !map[list1[i]]){
+      map[list1[i]] = [];
+
+    }
+    if (i < list2.length && !map[list2[i]]){
+      map[list2[i]] = [];
+
+    }    
+    if (i < list1.length && map[list1[i]]){
+      map[list1[i]].push(i);
+
+    }
+    if (i < list2.length && map[list2[i]]){
+      map[list2[i]].push(i);
+    }
+
+    
+    if (i < list1.length && map[list1[i]].length === 2) {
+      if (map[list1[i]][0] + map[list1[i]][1] === min){
+        common.push(list1[i]);
+      } else if (map[list1[i]][0] + map[list1[i]][1] <= min){
+        min = map[list1[i]][0] + map[list1[i]][1];
+        common = [list1[i]];
+      }
+    }
+    
+    if (i < list2.length && map[list2[i]].length === 2 && list1[i] !== list2[i]){
+      if (map[list2[i]][0] + map[list2[i]][1] === min){
+        common.push(list2[i]);
+      } else if (map[list2[i]][0] + map[list2[i]][1] <= min){
+        min = map[list2[i]][0] + map[list2[i]][1];
+        common = [list2[i]];
+      }
+    }
+  
+  }
+  return common;
+  
+};

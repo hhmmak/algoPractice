@@ -554,3 +554,48 @@ var isValidSudoku = function(board) {
   }
   return true;
 }
+
+/*
+Find Duplicate Subtrees
+Given the root of a binary tree, return all duplicate subtrees.
+For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+Two trees are duplicate if they have the same structure with the same node values.
+
+Constraints:
+The number of the nodes in the tree will be in the range [1, 10^4]
+-200 <= Node.val <= 200
+
+Definition for a binary tree node.
+function TreeNode(val, left, right) {
+    this.val = (val===undefined ? 0 : val)
+    this.left = (left===undefined ? null : left)
+    this.right = (right===undefined ? null : right)
+}
+
+@param {TreeNode} root
+@return {TreeNode[]}
+*/
+
+var findDuplicateSubtrees = function(root) {
+  let map = {};
+  let result = [];
+  
+  let findNode = (ptr) => {
+    if (!ptr){
+      return 'null';
+    }
+  
+    let subtree = `${ptr.val}, ${findNode(ptr.left)}, ${findNode(ptr.right)}`;
+    
+    if (map[subtree] === 1){
+      result.push(ptr);
+    }
+    map[subtree] = (map[subtree] || 0) + 1;
+    
+    return subtree;
+  }
+  
+  findNode(root);
+  return result;
+};
+ 

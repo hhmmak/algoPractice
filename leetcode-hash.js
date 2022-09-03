@@ -685,3 +685,37 @@ var fourSumCount = function(nums1, nums2, nums3, nums4) {
   
   return count;
 };
+
+/*
+Top K Frequent Elements
+
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+Constraints:
+1 <= nums.length <= 105
+-104 <= nums[i] <= 104
+k is in the range [1, the number of unique elements in the array].
+It is guaranteed that the answer is unique.
+
+@param {number[]} nums
+@param {number} k
+@return {number[]}
+*/
+
+// time complexity O(n) space complexity O(n)
+var topKFrequent = function(nums, k) {
+  let map = {};
+  let result = [];
+  
+  for (let i = 0; i < nums.length; i++){
+    map[nums[i]] = (map[nums[i]] || 0) + 1;
+  }
+  
+  for (let key in map){
+    result.push([key,map[key]]);
+  }
+  
+  result = result.sort((a,b) => b[1] - a[1]).map(item => item[0]);
+  
+  return result.splice(0, k);
+};

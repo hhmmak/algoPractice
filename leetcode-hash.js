@@ -627,3 +627,19 @@ var lengthOfLongestSubstring = function(s) {
   }
   return sMax;
 };
+
+//second attempt: sliding window
+var lengthOfLongestSubstring = function(s) {
+  let sMax = 0;
+  let j = 0;
+  let map = {};
+  
+  for (let i = 0; i < s.length; i++){
+    if (map[s[i]]) {
+      j = Math.max(j, map[s[i]]);
+    }
+    map[s[i]] = i + 1;
+    sMax = Math.max(sMax, map[s[i]] - j);
+  }
+  return sMax;
+};

@@ -643,3 +643,45 @@ var lengthOfLongestSubstring = function(s) {
   }
   return sMax;
 };
+
+/*
+4SumII
+Given four integer arrays nums1, nums2, nums3, and nums4 all of length n, return the number of tuples (i, j, k, l) such that:
+0 <= i, j, k, l < n
+nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
+
+Constraints:
+n == nums1.length
+n == nums2.length
+n == nums3.length
+n == nums4.length
+1 <= n <= 200
+-228 <= nums1[i], nums2[i], nums3[i], nums4[i] <= 228
+
+@param {number[]} nums1
+@param {number[]} nums2
+@param {number[]} nums3
+@param {number[]} nums4
+@return {number}
+*/
+
+var fourSumCount = function(nums1, nums2, nums3, nums4) {
+  let map = {};
+  let count = 0;
+  
+  for (let i = 0; i < nums1.length; i++){
+    for (let j = 0; j < nums2.length; j++){
+      map[nums1[i] + nums2[j]] = (map[nums1[i] + nums2[j]] || 0) + 1;
+    }
+  }
+  
+  for (let i = 0; i < nums3.length; i++){
+    for (let j = 0; j < nums4.length; j++){
+      if (map[-1 * (nums3[i] + nums4[j])]){
+        count += map[-1 * (nums3[i] + nums4[j])];
+      }
+    }
+  }
+  
+  return count;
+};

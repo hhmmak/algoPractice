@@ -719,3 +719,70 @@ var topKFrequent = function(nums, k) {
   
   return result.splice(0, k);
 };
+
+/*
+Insert Delete GetRandom O(1)
+
+Implement the RandomizedSet class:
+RandomizedSet() Initializes the RandomizedSet object.
+bool insert(int val) Inserts an item val into the set if not present. Returns true if the item was not present, false otherwise.
+bool remove(int val) Removes an item val from the set if present. Returns true if the item was present, false otherwise.
+int getRandom() Returns a random element from the current set of elements (it's guaranteed that at least one element exists when this method is called). Each element must have the same probability of being returned.
+You must implement the functions of the class such that each function works in average O(1) time complexity.
+
+Constraints:
+-231 <= val <= 231 - 1
+At most 2 * 105 calls will be made to insert, remove, and getRandom.
+There will be at least one element in the data structure when getRandom is called.
+
+Your RandomizedSet object will be instantiated and called as such:
+var obj = new RandomizedSet()
+var param_1 = obj.insert(val)
+var param_2 = obj.remove(val)
+var param_3 = obj.getRandom()
+*/
+
+
+var RandomizedSet = function() {
+  this.map = {};
+  this.set = [];
+};
+
+/** 
+* @param {number} val
+* @return {boolean}
+*/
+RandomizedSet.prototype.insert = function(val) {
+  if (this.map[val] !== undefined){
+    return false;
+  }
+  this.map[val] = this.set.length;
+  this.set.push(val);
+  return true;
+};
+
+/** 
+* @param {number} val
+* @return {boolean}
+*/
+RandomizedSet.prototype.remove = function(val) {
+  if (this.map[val] === undefined){
+    return false;
+  }
+
+  let index = this.map[val];
+  this.set[index] = this.set[this.set.length - 1];
+  this.map[this.set[index]] = index;
+  this.set.pop();
+
+  delete this.map[val];
+
+  return true;
+};
+
+/**
+* @return {number}
+*/
+RandomizedSet.prototype.getRandom = function() {
+return this.set[Math.floor(Math.random()*(this.set.length))];
+};

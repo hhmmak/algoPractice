@@ -114,3 +114,37 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
   this.size --;
   
 };
+
+/*
+.. Linked List Cycle Check
+*/
+
+/*
+Constraints:
+The number of the nodes in the list is in the range [0, 104].
+-105 <= Node.val <= 105
+pos is -1 or a valid index in the linked-list.
+
+Definition for singly-linked list.
+function ListNode(val) {
+    this.val = val;
+    this.next = null;
+}
+ */
+
+// check presence of cycle
+var hasCycle = function(head) {
+    
+  let fast = head;
+  let slow = head;
+
+  while (fast !== null && fast.next !== null) {
+    fast = fast.next.next;
+    slow = slow.next;
+    if (fast === slow){
+      return true;
+    }
+  }
+  return false;
+
+};

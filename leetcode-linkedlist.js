@@ -235,3 +235,34 @@ var getIntersectionNode = function(headA, headB) {
   return ptA;
 
 };
+
+/*
+Remove Nth Node From End of List
+Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+Constraints:
+The number of nodes in the list is sz.
+1 <= sz <= 30
+0 <= Node.val <= 100
+1 <= n <= sz
+*/
+
+var removeNthFromEnd = function(head, n) {
+  let fast = head;
+  let node = head;
+  
+  for (let i = 0; i < n; i++) {
+    fast = fast.next;
+  }
+  if (fast === null){
+    head = head.next;
+    return head;
+  }
+  while (fast.next !== null){
+    fast = fast.next;
+    node = node.next;
+  }
+  node.next = node.next.next;
+  
+  return head;
+};

@@ -172,6 +172,7 @@ var detectCycle = function(head) {
 Intersection of two linked list
 */
 
+//first attempt : loop until intersection found
 var getIntersectionNode = function(headA, headB) {
 
   let ptA = headA;
@@ -188,6 +189,32 @@ var getIntersectionNode = function(headA, headB) {
     }
     if (ptB === null) {
       ptB = headB;
+    }
+  }
+  return ptA;
+
+};
+
+//second attempt : take advantage of a.length + b.length = b.length + a.length
+//total time O (2n) : loop through both twice total at most
+var getIntersectionNode = function(headA, headB) {
+
+  let ptA = headA;
+  let ptB = headB;
+  
+  while (ptA !== ptB){
+    ptA = ptA.next;
+    ptB = ptB.next;
+    if (ptA === null && ptB === null){
+        return null;
+    }
+
+    //flip 
+    if (ptA === null) {
+      ptA = headB;
+    }
+    if (ptB === null) {
+      ptB = headA;
     }
   }
   return ptA;

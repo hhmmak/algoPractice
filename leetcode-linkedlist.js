@@ -167,3 +167,29 @@ var detectCycle = function(head) {
   }
   return null;
 };
+
+/*
+Intersection of two linked list
+*/
+
+var getIntersectionNode = function(headA, headB) {
+
+  let ptA = headA;
+  let ptB = headB;
+  
+  while (ptA !== ptB){
+    ptA = ptA.next;
+    ptB = ptB.next;
+  if (ptA === null && ptB === null){
+      return null;
+  }
+    if (ptA === null) {
+      ptA = headA;
+    }
+    if (ptB === null) {
+      ptB = headB;
+    }
+  }
+  return ptA;
+
+};

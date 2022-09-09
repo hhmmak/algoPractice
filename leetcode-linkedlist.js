@@ -220,3 +220,18 @@ var getIntersectionNode = function(headA, headB) {
   return ptA;
 
 };
+
+//third attempt : refactoring
+var getIntersectionNode = function(headA, headB) {
+
+  let ptA = headA;
+  let ptB = headB;
+  
+  while (ptA !== ptB){
+    ptA = ptA ? ptA.next : headB;
+    ptB = ptB ? ptB.next : headA;
+
+  }
+  return ptA;
+
+};

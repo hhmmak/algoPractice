@@ -148,3 +148,22 @@ var hasCycle = function(head) {
   return false;
 
 };
+
+// check beginning of cycle
+var detectCycle = function(head) {
+  let fast = head;
+  let slow = head;
+  while (fast !== null && fast.next !== null) {
+    fast = fast.next.next;
+    slow = slow.next;
+    if (fast === slow){
+      let start = head;
+      while (start !== slow){
+        start = start.next;
+        slow = slow.next;
+      }
+      return start;
+    }
+  }
+  return null;
+};

@@ -266,3 +266,36 @@ var removeNthFromEnd = function(head, n) {
   
   return head;
 };
+
+/*
+.. Reverse Linked List
+*/
+
+// recursion method
+var reverseList = function(head) {
+  const reverse = (node, prevHead = null) => {
+    if (node === null){
+      return prevHead;
+    }
+    let remain = node.next;
+    node.next = prevHead;
+    return reverse(remain, node);
+  }
+  
+  return reverse(head);
+  
+};
+
+//while loop
+var reverseList = function(head) {
+  let prevHead = null;
+  while (head !== null){
+    let remain = head.next;
+    head.next = prevHead;
+    prevHead = head;
+    head = remain;
+  }
+  
+  return prevHead;
+
+};

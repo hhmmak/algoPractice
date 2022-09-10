@@ -323,3 +323,39 @@ var removeElements = function(head, val) {
   return head;
   
 };
+
+/*
+Odd Even Linked List
+Given the head of a singly linked list, group all the nodes with odd indices together followed by the nodes with even indices, and return the reordered list.
+The first node is considered odd, and the second node is even, and so on.
+Note that the relative order inside both the even and odd groups should remain as it was in the input.
+You must solve the problem in O(1) extra space complexity and O(n) time complexity.
+
+Constraints:
+The number of nodes in the linked list is in the range [0, 104].
+-106 <= Node.val <= 106
+*/
+
+var oddEvenList = function(head) {
+  if (head === null || head.next === null || head.next.next === null){
+    return head;
+  }
+  
+  let pt = head;
+  let even = head.next;
+  let hop = head.next.next;
+  let evenPt = head.next;
+  
+  while (hop !== null){
+    pt.next = hop;
+    evenPt.next = hop.next;
+    hop = hop.next? hop.next.next : null;
+    
+    pt = pt.next;
+    evenPt = evenPt.next;
+  }
+  
+  pt.next = even;
+  
+  return head;
+};

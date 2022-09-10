@@ -307,29 +307,19 @@ Given the head of a linked list and an integer val, remove all the nodes of the 
 
 var removeElements = function(head, val) {
 
-  while (head !== null && head.val === val) {
+  while (head !== null && head.val === val){
     head = head.next;
   }
-    
-  if (head === null || head.next === null){
-    return head;
-  }
   
-  let slow = head;
-  let fast = head.next;
-  
-  while (fast !== null){
-    while (fast.val === val) {
-      fast = fast.next;
-      slow.next = fast;
-      if (fast === null){
-        return head;
-      }
+  let pt = head;
+  while (pt !== null && pt.next !== null) {
+    if (pt.next.val === val){
+      pt.next = pt.next.next;
+    } else {
+      pt = pt.next;
     }
-    slow = slow.next;
-    fast = fast.next;
   }
-  return head;
   
+  return head;
   
 };

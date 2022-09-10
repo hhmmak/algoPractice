@@ -299,3 +299,37 @@ var reverseList = function(head) {
   return prevHead;
 
 };
+
+/*
+Remove Linked List Elements
+Given the head of a linked list and an integer val, remove all the nodes of the linked list that has Node.val == val, and return the new head.
+*/
+
+var removeElements = function(head, val) {
+
+  while (head !== null && head.val === val) {
+    head = head.next;
+  }
+    
+  if (head === null || head.next === null){
+    return head;
+  }
+  
+  let slow = head;
+  let fast = head.next;
+  
+  while (fast !== null){
+    while (fast.val === val) {
+      fast = fast.next;
+      slow.next = fast;
+      if (fast === null){
+        return head;
+      }
+    }
+    slow = slow.next;
+    fast = fast.next;
+  }
+  return head;
+  
+  
+};

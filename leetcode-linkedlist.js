@@ -359,3 +359,42 @@ var oddEvenList = function(head) {
   
   return head;
 };
+
+/*
+Palindrome Linked List : Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
+
+Constraints:
+The number of nodes in the list is in the range [1, 105].
+0 <= Node.val <= 9
+*/
+
+var isPalindrome = function(head) {
+
+  let half = head;
+  let double = head;
+  let prevHd = null;
+  
+  while (double !== null && double.next !== null) {
+  let remain = head.next;
+    double = double.next.next;
+    head.next = prevHd;
+    prevHd = head;
+    head = remain;
+  }
+  
+  if (double !== null && double.next === null) {
+    head = head.next;
+  }
+  
+  
+  while (head !== null && prevHd !== null) {
+    if (head.val !== prevHd.val) {
+      return false;
+  }
+    head = head.next;
+    prevHd = prevHd.next;
+  }
+  
+  return true;
+    
+};

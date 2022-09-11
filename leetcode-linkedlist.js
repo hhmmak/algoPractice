@@ -368,6 +368,7 @@ The number of nodes in the list is in the range [1, 105].
 0 <= Node.val <= 9
 */
 
+//time O(n) space O(1)
 var isPalindrome = function(head) {
 
   let half = head;

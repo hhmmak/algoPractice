@@ -399,3 +399,45 @@ var isPalindrome = function(head) {
   return true;
     
 };
+
+/*
+Merge Two Sorted Lists
+Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+Return the head of the merged linked list.
+*/
+
+var mergeTwoLists = function(list1, list2) {
+  if (list1 === null){
+    return list2;
+  }
+  
+  if (list2 === null) {
+    return list1;
+  }
+  
+  let head = new ListNode(0);
+  let pt = head;
+  let pt1 = list1;
+  let pt2 = list2;
+  
+  
+  while (pt1 !== null && pt2 !== null){
+    if (pt1.val < pt2.val) {
+      pt.next = pt1;
+      pt1 = pt1.next;
+    } else {
+      pt.next = pt2;
+      pt2 = pt2.next;
+    }
+    pt = pt.next;
+  }
+  
+  if (pt1 === null){
+    pt.next = pt2;
+  } else if (pt2 === null) {
+    pt.next = pt1;
+  }
+  
+  return head.next;
+  
+};

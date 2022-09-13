@@ -441,3 +441,29 @@ var mergeTwoLists = function(list1, list2) {
   return head.next;
   
 };
+
+/*
+Add Two Numbers
+You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.
+You may assume the two numbers do not contain any leading zero, except the number 0 itself.
+*/
+
+var addTwoNumbers = function(l1, l2) {
+  let sum = new ListNode(0);
+  let head = sum;
+  let zero = new ListNode(0);
+    
+  while (l1 !== zero || l2 !== zero){
+    sum.val += (l1.val + l2.val);
+    let next = new ListNode( Math.floor(sum.val / 10) );
+    sum.val = sum.val % 10;
+    l1 = l1.next? l1.next : zero;
+    l2 = l2.next? l2.next : zero;
+    if ((l1 !== zero || l2 !== zero) || next.val){
+      sum.next = next;
+      sum = sum.next;
+    }
+  }
+  
+  return head;
+};

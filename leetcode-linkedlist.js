@@ -565,5 +565,36 @@ var copyRandomList = function(head) {
 	return headCopy;
 };
 
+/*
+Rotate List
+Given the head of a linked list, rotate the list to the right by k places.
+*/
 
+var rotateRight = function(head, k) {
+  let pt = head;
+	let length = 0;
+	while (pt) {
+		length ++;
+		pt = pt.next;
+	}
+	
+	if ( !(head && (k % length)) || length === 1 ){
+		return head;
+	}
+	
+	pt = head;
+	for (let i = 1; i < length - (k % length); i++){
+		pt = pt.next;
+	}
+	let newHead = pt.next;
+	pt.next = null;
+	
+	pt = newHead;
+	while (pt.next) {
+		pt = pt.next;
+	}
+	pt.next = head;
 
+	return newHead;
+
+};

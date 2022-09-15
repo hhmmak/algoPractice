@@ -72,3 +72,34 @@ var fib = function(n) {
   return arr[n];
 };
 
+/*
+pow(x,n)
+Constraints:
+-100.0 < x < 100.0
+-231 <= n <= 231-1, integer
+-104 <= xn <= 104
+*/
+
+var myPow = function(x, n) {
+  if (n === 0){
+    return 1;
+  }
+  if (x === 1){
+      return 1;
+  }
+  let result  = x;
+  let mul = x;
+  let i = 2;
+  while (i <= Math.abs(n)){
+    result *= mul;
+      mul = result;
+        if (i * 2 <= Math.abs(n)){
+          i *= 2;
+        } else {
+          mul = x;
+          i ++;
+      }
+  }
+    
+    return n > 0 ? result : (1 / result);
+  };

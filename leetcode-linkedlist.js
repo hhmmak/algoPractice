@@ -442,6 +442,21 @@ var mergeTwoLists = function(list1, list2) {
   
 };
 
+// recursion - runtime more than first attempt
+// var mergeTwoLists = function(list1, list2) {
+// 	let root = null;
+// 	if (!(list1 || list2)){
+// 		return null;
+// 	}
+// 	if (list1 && (list2 === null || list1.val < list2.val)) {
+// 		list1.next = mergeTwoLists(list1.next, list2);
+//     return list1;
+// 	}
+// 		list2.next = mergeTwoLists(list1, list2.next);
+//     return list2;
+		
+// }
+
 /*
 Add Two Numbers
 You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.

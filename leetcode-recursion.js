@@ -103,3 +103,30 @@ var myPow = function(x, n) {
     
     return n > 0 ? result : (1 / result);
   };
+
+
+/*
+K-th Symbol in Grammar
+We build a table of n rows (1-indexed). We start by writing 0 in the 1st row. Now in every subsequent row, we look at the previous row and replace 
+each occurrence of 0 with 01, and each occurrence of 1 with 10.
+For example, for n = 3, the 1st row is 0, the 2nd row is 01, and the 3rd row is 0110.
+Given two integer n and k, return the kth (1-indexed) symbol in the nth row of a table of n rows.
+
+Constraints:
+1 <= n <= 30
+1 <= k <= 2n - 1
+*/
+
+//binary tree attempt
+//right branch (even number k) must be opposite to root ( k / 2 of n - 1), left branch (odd number of k) must be same of root
+//
+var kthGrammar = function(n, k) {
+  if (n === 1){
+    return false;
+  }
+  if (k % 2) {
+    return kthGrammar(n - 1, Math.ceil(k / 2));
+  } else {
+    return !kthGrammar(n - 1, Math.ceil(k / 2));
+  }
+};

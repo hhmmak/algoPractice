@@ -42,3 +42,20 @@ var preorderTraversal = function(root) {
   
   return result;
 };
+
+//second attempt = recursive
+var preorderTraversal = function(root) {
+  let result = [];
+  
+  const list = (node) => {
+    if (!node) {
+      return;
+    }
+    result.push(node.val);
+    list(node.left);
+    list(node.right);
+  }
+  
+  list(root);
+  return result;
+};

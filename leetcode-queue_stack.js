@@ -77,3 +77,59 @@ MyCircularQueue.prototype.isFull = function() {
 	return false;
 
 };
+
+/*
+Number of Islands
+Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges
+of the grid are all surrounded by water.
+
+Example :
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+
+Constrain:
+m == grid.length
+n == grid[i].length
+1 <= m, n <= 300
+grid[i][j] is '0' or '1'.
+*/
+
+var numIslands = function(grid) {
+  if (!grid) {
+		return 0;
+	}
+
+  let island = 0;
+
+	const check = (i, j) => {
+		if (i < 0 || j < 0|| i >= grid.length || j >= grid[0].length || grid[i][j] !== "1") {
+			return false;
+		}
+    
+		grid[i][j] = "2";
+		check(i, j + 1);
+		check(i + 1, j);
+    check(i, j - 1);
+    check(i - 1, j);
+		return true;
+		
+	}
+
+
+	for (let i = 0; i < grid.length; i++) {
+		for (let j = 0; j < grid[0].length; j++) {
+      if (check(i, j)) {
+				island ++;
+			}
+		}
+	}
+	
+	return island;
+
+};

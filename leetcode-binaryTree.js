@@ -14,3 +14,31 @@ var maxDepth = function(root) {
   
   return findDepth(root);
 };
+
+/*
+Binary Tree Preorder Traversal
+*/
+
+// first attempt = iterative
+var preorderTraversal = function(root) {
+  let result = [];
+  let temp = [];
+  let node = root;
+
+  while (node){
+    result.push(node.val);
+    if (node.right) {
+      temp.push(node.right);
+    }
+    if (node.left) {
+      node = node.left;
+    } else if (temp.length >= 1){
+      node = temp[temp.length - 1];
+      temp.pop();
+    } else {
+      node = null;
+    } 
+  }
+  
+  return result;
+};

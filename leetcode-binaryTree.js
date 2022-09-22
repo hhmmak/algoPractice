@@ -2,16 +2,16 @@
 Maximum Depth of Binary Tree
 */
 
-var maxDepth = function(root) {
+var maxDepth = function (root) {
 
-	const findDepth = (root) => {
-		if ( !root ) {
-			return 0;
-		}
-		return Math.max(findDepth(root.left) + 1, findDepth(root.right) + 1);
-		
-	}
-  
+  const findDepth = (root) => {
+    if (!root) {
+      return 0;
+    }
+    return Math.max(findDepth(root.left) + 1,findDepth(root.right) + 1);
+
+  }
+
   return findDepth(root);
 };
 
@@ -20,33 +20,33 @@ Binary Tree Preorder Traversal
 */
 
 // first attempt = iterative
-var preorderTraversal = function(root) {
+var preorderTraversal = function (root) {
   let result = [];
   let temp = [];
   let node = root;
 
-  while (node){
+  while (node) {
     result.push(node.val);
     if (node.right) {
       temp.push(node.right);
     }
     if (node.left) {
       node = node.left;
-    } else if (temp.length >= 1){
+    } else if (temp.length >= 1) {
       node = temp[temp.length - 1];
       temp.pop();
     } else {
       node = null;
-    } 
+    }
   }
-  
+
   return result;
 };
 
 //second attempt = recursive
-var preorderTraversal = function(root) {
+var preorderTraversal = function (root) {
   let result = [];
-  
+
   const list = (node) => {
     if (!node) {
       return;
@@ -55,7 +55,7 @@ var preorderTraversal = function(root) {
     list(node.left);
     list(node.right);
   }
-  
+
   list(root);
   return result;
 };
@@ -64,25 +64,41 @@ var preorderTraversal = function(root) {
 Binary Tree Inorder Traversal
 */
 
-var inorderTraversal = function(root) {
+//first attempt - iterative
+var inorderTraversal = function (root) {
   if (!root) {
-  return [];
-}
-
-let result = [];
-let stack = [];
-let node = root;
-
-while (node || stack.length){
-  while (node){
-    stack.push(node);
-    node = node.left;
+    return [];
   }
-  node = stack.pop();
-  result.push(node.val);
-  node = node.right;
-}
 
-return result;
+  let result = [];
+  let stack = [];
+  let node = root;
+
+  while (node || stack.length) {
+    while (node) {
+      stack.push(node);
+      node = node.left;
+    }
+    node = stack.pop();
+    result.push(node.val);
+    node = node.right;
+  }
+
+  return result;
 };
 
+// second attempt - recursion
+var inorderTraversal = function (root) {
+
+  let result = [];
+  const check = (node) => {
+    if (!node) {
+      return;
+    }
+    check(node.left);
+    result.push(node.val);
+    check(node.right);
+  }
+  check(root);
+  return result;
+};

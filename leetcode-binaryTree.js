@@ -22,7 +22,7 @@ Binary Tree Preorder Traversal
 // first attempt = iterative
 var preorderTraversal = function (root) {
   let result = [];
-  let temp = [];
+  let temp = [null];
   let node = root;
 
   while (node) {
@@ -30,14 +30,7 @@ var preorderTraversal = function (root) {
     if (node.right) {
       temp.push(node.right);
     }
-    if (node.left) {
-      node = node.left;
-    } else if (temp.length >= 1) {
-      node = temp[temp.length - 1];
-      temp.pop();
-    } else {
-      node = null;
-    }
+    node = node.left || temp.pop();
   }
 
   return result;

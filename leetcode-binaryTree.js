@@ -59,3 +59,30 @@ var preorderTraversal = function(root) {
   list(root);
   return result;
 };
+
+/*
+Binary Tree Inorder Traversal
+*/
+
+var inorderTraversal = function(root) {
+  if (!root) {
+  return [];
+}
+
+let result = [];
+let stack = [];
+let node = root;
+
+while (node || stack.length){
+  while (node){
+    stack.push(node);
+    node = node.left;
+  }
+  node = stack.pop();
+  result.push(node.val);
+  node = node.right;
+}
+
+return result;
+};
+

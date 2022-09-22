@@ -102,3 +102,14 @@ var inorderTraversal = function (root) {
   check(root);
   return result;
 };
+
+// third attempt - recursion, same function
+var inorderTraversal = function(root) {
+
+  if (!root) {
+		return [];
+	}
+
+	return [...inorderTraversal(root.left), root.val, ...inorderTraversal(root.right)];
+
+};

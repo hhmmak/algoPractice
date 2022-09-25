@@ -141,5 +141,37 @@ var postorderTraversal = function(root) {
   }
 
   return [...postorderTraversal(root.left), ...postorderTraversal(root.right), root.val];
+};
+
+/*
+Breadth-First Search, Level Order traversal
+*/
+
+var levelOrder = function(root) {
+  if (!root){
+    return [];
+  }
+  
+  let queue = [root];
+	let level = -1;
+	let result = [];
+	while (queue.length){
+		let neighbors = queue.length;
+		result.push([]);
+		level ++;
+
+		for (let i = 0; i < neighbors; i++){
+			let node = queue.shift();
+			if (node.left) {
+				queue.push(node.left);
+			}
+			if (node.right) {
+				queue.push(node.right);
+			}
+			result[level].push(node.val);
+		}
+	}
+	
+	return result;
 
 };

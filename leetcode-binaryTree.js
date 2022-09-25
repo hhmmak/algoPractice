@@ -194,3 +194,53 @@ var isSymmetric = function(root) {
 
 	return check(root.left, root.right);
 };
+
+/*
+Path Sum
+*/
+
+var hasPathSum = function(root, targetSum) {
+	if (!root){
+    return false;  
+  }
+  
+  if (!root.left && !root.right) {
+    return root.val === targetSum;
+  }
+  
+  const add = (node, sum) => {
+    if (!node.left && !node.right){
+      return (sum + node.val) === targetSum;
+    }
+    if (!node.right){
+      return add(node.left, sum + node.val);
+    }
+    if (!node.left){
+      return add(node.right, sum + node.val);
+    }
+
+		return add(node.left, sum + node.val) || add(node.right, sum + node.val);
+	}
+  
+  return add(root, 0);
+};
+
+/*
+Construct Binary Tree from Inorder and Postorder Traversal
+*/
+
+var buildTree = function(inorder, postorder) {
+  let mapInorder = {};
+  inorder.forEach( (val, i) => mapInorder[val] = i)
+  const build = (low, high) => {
+    if (low > high) {
+      return null;
+    }
+    let node = new TreeNode(postorder.pop());
+    let rootIndex = mapInorder[node.val];
+    node.right = build(rootIndex + 1, high);
+    node.left = build(low, rootIndex - 1);
+    return node;
+  }
+  return build(0, inorder.length - 1);
+};

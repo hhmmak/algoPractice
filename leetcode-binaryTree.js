@@ -175,3 +175,22 @@ var levelOrder = function(root) {
 	return result;
 
 };
+
+/*
+Symmetric Tree
+*/
+
+var isSymmetric = function(root) {
+  
+	const check = (rootL, rootR) => {
+		if (!rootL || !rootR) {
+			return rootL === rootR;
+		}
+		if (rootL.val !== rootR.val) {
+			return false;
+		}
+		return check(rootL.left, rootR.right) && check(rootL.right, rootR.left);	
+	}
+
+	return check(root.left, root.right);
+};

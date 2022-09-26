@@ -244,3 +244,25 @@ var buildTree = function(inorder, postorder) {
   }
   return build(0, inorder.length - 1);
 };
+
+/*
+Construct Binary Tree from Preorder and Inorder Traversal
+*/
+
+var buildTree = function(preorder, inorder) {
+  let mapInorder = {};
+	inorder.forEach((val, i) => mapInorder[val] = i);
+
+	const build = (start, end) => {
+		if (start > end) {
+			return null;
+		}
+		let node = new TreeNode(preorder.shift());
+		let nodeIndex = mapInorder[node.val];
+		node.left = build(start, nodeIndex - 1);
+		node.right = build(nodeIndex + 1, end);
+		return node;
+	}
+	return build(0, preorder.length - 1);
+
+};

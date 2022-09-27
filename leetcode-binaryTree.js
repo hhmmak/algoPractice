@@ -7,7 +7,7 @@ var maxDepth = function (root) {
     if (!root) {
       return 0;
     }
-    return Math.max(findDepth(root.left) + 1, findDepth(root.right) + 1);
+    return Math.max(findDepth(root.left) + 1,findDepth(root.right) + 1);
   };
 
   return findDepth(root);
@@ -181,24 +181,24 @@ Symmetric Tree
 */
 
 var isSymmetric = function (root) {
-  const check = (rootL, rootR) => {
+  const check = (rootL,rootR) => {
     if (!rootL || !rootR) {
       return rootL === rootR;
     }
     if (rootL.val !== rootR.val) {
       return false;
     }
-    return check(rootL.left, rootR.right) && check(rootL.right, rootR.left);
+    return check(rootL.left,rootR.right) && check(rootL.right,rootR.left);
   };
 
-  return check(root.left, root.right);
+  return check(root.left,root.right);
 };
 
 /*
 Path Sum
 */
 
-var hasPathSum = function (root, targetSum) {
+var hasPathSum = function (root,targetSum) {
   if (!root) {
     return false;
   }
@@ -207,62 +207,62 @@ var hasPathSum = function (root, targetSum) {
     return root.val === targetSum;
   }
 
-  const add = (node, sum) => {
+  const add = (node,sum) => {
     if (!node.left && !node.right) {
       return sum + node.val === targetSum;
     }
     if (!node.right) {
-      return add(node.left, sum + node.val);
+      return add(node.left,sum + node.val);
     }
     if (!node.left) {
-      return add(node.right, sum + node.val);
+      return add(node.right,sum + node.val);
     }
 
-    return add(node.left, sum + node.val) || add(node.right, sum + node.val);
+    return add(node.left,sum + node.val) || add(node.right,sum + node.val);
   };
 
-  return add(root, 0);
+  return add(root,0);
 };
 
 /*
 Construct Binary Tree from Inorder and Postorder Traversal
 */
 
-var buildTree = function (inorder, postorder) {
+var buildTree = function (inorder,postorder) {
   let mapInorder = {};
-  inorder.forEach((val, i) => (mapInorder[val] = i));
-  const build = (low, high) => {
+  inorder.forEach((val,i) => (mapInorder[val] = i));
+  const build = (low,high) => {
     if (low > high) {
       return null;
     }
     let node = new TreeNode(postorder.pop());
     let rootIndex = mapInorder[node.val];
-    node.right = build(rootIndex + 1, high);
-    node.left = build(low, rootIndex - 1);
+    node.right = build(rootIndex + 1,high);
+    node.left = build(low,rootIndex - 1);
     return node;
   };
-  return build(0, inorder.length - 1);
+  return build(0,inorder.length - 1);
 };
 
 /*
 Construct Binary Tree from Preorder and Inorder Traversal
 */
 
-var buildTree = function (preorder, inorder) {
+var buildTree = function (preorder,inorder) {
   let mapInorder = {};
-  inorder.forEach((val, i) => (mapInorder[val] = i));
+  inorder.forEach((val,i) => (mapInorder[val] = i));
 
-  const build = (start, end) => {
+  const build = (start,end) => {
     if (start > end) {
       return null;
     }
     let node = new TreeNode(preorder.shift());
     let nodeIndex = mapInorder[node.val];
-    node.left = build(start, nodeIndex - 1);
-    node.right = build(nodeIndex + 1, end);
+    node.left = build(start,nodeIndex - 1);
+    node.right = build(nodeIndex + 1,end);
     return node;
   };
-  return build(0, preorder.length - 1);
+  return build(0,preorder.length - 1);
 };
 
 /*
@@ -302,12 +302,12 @@ var connect = function (root) {
 Lowest Common Ancestor of a Binary Tree
 */
 
-var lowestCommonAncestor = function (root, p, q) {
+var lowestCommonAncestor = function (root,p,q) {
   if (root === null) {
     return false;
   }
-  let left = lowestCommonAncestor(root.left, p, q);
-  let right = lowestCommonAncestor(root.right, p, q);
+  let left = lowestCommonAncestor(root.left,p,q);
+  let right = lowestCommonAncestor(root.right,p,q);
 
   if (left && right) {
     return root;
@@ -322,4 +322,80 @@ var lowestCommonAncestor = function (root, p, q) {
   }
 
   return true;
+};
+
+/*
+Serialize and Deserialize Binary Tree
+*/
+
+var serialize = function (root) {
+  if (!root) {
+    return [];
+  }
+
+  let result = [];
+  let queue = [root];
+  let nullCount = 0;
+  let levelCount = queue.length;
+
+  while (nullCount !== levelCount) {
+    nullCount = 0;
+    for (let i = 0; i < levelCount; i++) {
+      let node = queue.shift();
+      if (node) {
+        queue.push(node.left);
+        if (!node.left) {
+          nullCount++;
+        }
+        queue.push(node.right);
+        if (!node.right) {
+          nullCount++;
+        }
+      }
+      result.push(node && node.val);
+    }
+    levelCount = queue.length;
+  }
+
+  while (result[result.length - 1] === null) {
+    result.pop();
+  }
+  return result;
+
+};
+
+var deserialize = function (data) {
+  if (!data.length) {
+    return null;
+  }
+
+
+  let map = {};
+
+  let root = new TreeNode(data[0]);
+  map[0] = root;
+
+  let node = 0;
+  let child = 1;
+
+  while (child < data.length) {
+    if (map[node]) {
+      if (data[child] !== null) {
+        map[node].left = new TreeNode(data[child]);
+        map[child] = map[node].left
+      }
+      child++;
+      if (child < data.length) {
+        if (data[child] !== null) {
+          map[node].right = new TreeNode(data[child]);
+          map[child] = map[node].right
+        }
+        child++;
+      }
+    }
+    node++;
+  }
+  return root;
+
+
 };

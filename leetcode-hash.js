@@ -253,7 +253,7 @@ Constraints:
 @return {boolean}
 */
 
-// hash method
+// hash method - first attempt
 var isHappy = function(n) {
   let map = {};
   while (n !== 1){
@@ -269,6 +269,31 @@ var isHappy = function(n) {
     }
   }
   return true;
+};
+
+//second attempt - no convert data type
+var isHappy = function(n) {
+	let map = {};
+	let num = n;
+	let sum = 0;
+
+	while (true) {
+		while (num / 10){
+			let digit = num % 10;
+			num = Math.floor(num / 10);
+			sum += (digit * digit);
+		}
+		if (sum === 1) {
+			return true;
+		}
+		if (map[sum]){
+			return false;
+		}
+		map[sum] = true;
+		num = sum;
+		sum = 0;
+	}
+
 };
 
 /*

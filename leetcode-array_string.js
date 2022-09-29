@@ -450,3 +450,34 @@ var removeDuplicates = function(nums) {
   }
   return k + 1;
 };
+
+/*
+Where Will the Ball Fall
+*/
+
+var findBall = function(grid) {
+  let answer = [];
+  let m = grid.length;  // y-axis
+  let n = grid[0].length; // x-axis
+
+  for (let i = 0; i < n; i ++){
+    let x = i;
+    let y = 0;
+    let drop = true;
+    while (y < m && drop && x >= 0 && x < n){
+      let dir = grid[y][x];
+      if (x >= 0 && x < n && grid[y][x] === grid[y][x + dir]) {
+        x = x + dir;
+        y ++;
+      } else {
+        drop = false;
+      }
+    }
+    if (drop) {
+      answer.push(x);
+    } else {
+      answer.push(-1);
+    }
+  }
+  return answer;
+};

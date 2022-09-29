@@ -481,3 +481,68 @@ var findBall = function(grid) {
   }
   return answer;
 };
+
+/*
+Find K Closest Elements
+Given a sorted integer array arr, two integers k and x, return the k closest integers to x in the array. The result should also be sorted in ascending order.
+
+An integer a is closer to x than an integer b if:
+|a - x| < |b - x|, or
+|a - x| == |b - x| and a < b
+*/
+
+/**
+ * @param {number[]} arr
+ * @param {number} k
+ * @param {number} x
+ * @return {number[]}
+ */
+var findClosestElements = function(arr, k, x) {
+  if (arr.length === k) {
+    return arr;
+  }
+  if (x <= arr[0]){
+    return arr.slice(0, k);
+  }
+  if (x >= arr[arr.length - 1]){
+    return arr.splice(-k);
+  }
+
+  let high = arr.length - 1;
+  let low = 0;
+  let mid = Math.floor((high + low) / 2);
+
+  while (arr[mid] !== x && high > low){
+    
+    if (arr[mid] < x){
+      low = mid + 1;
+    } else if (arr[mid] > x) {
+      high = mid - 1;
+    }
+    mid = Math.floor((high + low) / 2);
+  }
+
+  if (arr[mid] === x || x - arr[mid] <= arr[mid + 1] - x){
+    high = mid - 1;
+    low = mid;
+  } else if (x - arr[mid - 1] <= arr[mid] - x) {
+    high = mid - 2;
+    low = mid - 1;
+  } else {
+    high = mid;
+    low = mid + 1;
+  }
+  while (k > 0){
+    if (low - 1 < 0){
+      high ++;
+    } else if (high + 1 >= arr.length || x - arr[low - 1] <= arr[high + 1] - x){
+      low --;
+    } else {
+      high ++;
+    }
+    k --;
+  }
+  
+  return arr.slice(low, high + 1);
+  
+};

@@ -546,3 +546,55 @@ var findClosestElements = function(arr, k, x) {
   return arr.slice(low, high + 1);
   
 };
+
+/*
+Multiply Strings
+Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+Constraints:
+1 <= num1.length, num2.length <= 200
+num1 and num2 consist of digits only.
+Both num1 and num2 do not contain any leading zero, except the number 0 itself.
+*/
+
+var multiply = function(num1, num2) {
+  if (num1 === "0" || num2 === "0"){
+    return "0";
+  }
+  if (num1 === "1"){
+    return num2;
+  }
+  if (num2 === "1"){
+    return num1;
+  }
+
+  let ans = 0;
+
+  let arr1 = num1.split('');
+  let arr2 = num2.split('');
+
+  arr1.reverse();
+  arr2.reverse();
+
+  let map = {}
+
+  for (let i = 0; i < arr1.length; i++){
+    for (let j = 0; j < arr2.length; j++){
+      let mul = arr1[i] * arr2[j];
+      map[i + j] = map[i + j] ? map[i + j] + mul : mul;
+      // console.log(Math.pow(10,i) * short[i] * Math.pow(10,j) * long[j]);
+    }
+  }
+  let n = 0;
+  let num = "";
+  while (map[n] !== undefined){
+    let temp = map[n] % 10;
+    num = temp + num;
+    temp = Math.floor(map[n] / 10);
+    if (temp) {
+      map[n + 1] = map[n + 1] ? map[n + 1] + temp : temp;
+    }
+    n ++;
+  }
+
+  return num;
+};

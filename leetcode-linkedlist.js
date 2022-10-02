@@ -360,6 +360,31 @@ var oddEvenList = function(head) {
   return head;
 };
 
+//second attempt - faster runtime & less memory
+var oddEvenList = function(head) {
+  
+	if (!head || !head.next || !head.next.next) {
+		return head;
+	}
+	let evenHead = head.next;
+	let odd = head;
+	let even = evenHead;
+	while (even.next && even.next.next){
+		odd.next = even.next;
+		odd = odd.next;
+		even.next = odd.next;
+		even = even.next;
+	}
+	if (even.next){
+		odd.next = even.next;
+    odd = odd.next;
+    even.next = null;
+	}
+	odd.next = evenHead;
+	return head;
+
+};
+
 /*
 Palindrome Linked List : Given the head of a singly linked list, return true if it is a palindrome or false otherwise.
 

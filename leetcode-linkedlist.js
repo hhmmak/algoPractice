@@ -638,3 +638,55 @@ var rotateRight = function(head, k) {
 	return newHead;
 
 };
+
+/*
+Sort List
+Given the head of a linked list, return the list after sorting it in ascending order.
+*/
+
+var sortList = function(head) {
+  if (!head || !head.next){
+    return head;
+  }
+  
+  let prev = null;
+  let slow = head;
+  let fast = head;
+  
+  //split list into halves
+  while (fast && fast.next){
+    prev = slow;
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+    
+  prev.next = null;
+  
+  const merge = (first, second) => {
+    let headPrev = new ListNode(0); //dummy head node
+    let pt = headPrev;
+    
+    while (first && second){
+      if (first.val < second.val) {
+        pt.next = first;
+        first = first.next;
+      } else {
+        pt.next = second;
+        second = second.next;
+      }
+      pt = pt.next;
+    }
+    
+    // connect remaining sorted nodes
+    if (!first){
+      pt.next = second;
+    }
+    if (!second){
+      pt.next = first;
+    }
+    
+    return headPrev.next;
+  }
+
+  return merge(sortList(head), sortList(slow));
+};

@@ -598,3 +598,53 @@ var multiply = function(num1, num2) {
 
   return num;
 };
+
+/*
+Longest Palindrome by Concatenating Two Letter Words
+*/
+
+var longestPalindrome = function(words) {
+  if (words.length === 1){
+    if (words[0][0] === words[0][1]){
+      return 2;
+    }
+    return 0;
+  }
+  
+  if (words.length === 2){
+    if (words[0][0] === words[1][1] && words[0][1] === words[1][0]){
+      return 4;
+    }
+    if (words[0][0] === words[0][1] || words[1][0] === words[1][1]) {
+      return 2;
+    }
+    return 0;
+  }
+
+  let map = {};
+  let mapR = {};
+  for (let i = 0; i < words.length; i++){
+    let reverse = `${words[i][1]}${words[i][0]}`;
+    if (words[i][0] !== words[i][1] && map[reverse] !== undefined){
+      mapR[reverse] = mapR[reverse] === undefined ? 1 : mapR[reverse] + 1;
+    } else {
+      map[words[i]] = map[words[i]] === undefined ? 1 : map[words[i]] + 1;
+    }
+  }
+
+  let ans = 0;
+  let noSingle = true;
+  for (let key in map){
+    if (key[0] === key[1]){
+      ans += 4 * Math.floor(map[key] / 2);
+      if (map[key] % 2 && noSingle){
+        ans += 2;
+        noSingle = false;
+      }
+    } else if (mapR[key] !== undefined){
+      ans += 4 * Math.min(map[key], mapR[key]);
+    }
+  }
+  
+  return ans;
+};

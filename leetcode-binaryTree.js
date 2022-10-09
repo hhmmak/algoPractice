@@ -399,3 +399,22 @@ var deserialize = function (data) {
 
 
 };
+
+/*
+Invert Binary Tree
+*/
+
+var invertTree = function(root) {
+  if (!root || (!root.left && !root.right)){
+    return root;
+  }
+  
+  invertTree(root.left);
+  invertTree(root.right);
+
+  let temp = root.right;
+  root.right = root.left;
+  root.left = temp;
+
+  return root;
+};

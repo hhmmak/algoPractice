@@ -478,3 +478,28 @@ var diameterOfBinaryTree = function(root) {
   check(root);
   return maxLength;
 };
+
+/*
+Convert Sorted Array to Binary Search Tree
+Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+*/
+
+var sortedArrayToBST = function(nums) {
+  if (nums.length === 1){
+    return new TreeNode(nums[0]);
+  }
+
+  const build = (low, high) => {
+    if (low > high) {
+      return null;
+    }
+    let mid = Math.floor((low + high) / 2);
+    let node = new TreeNode(nums[mid]);
+    node.left = build(low, mid - 1);
+    node.right = build(mid + 1, high);
+    return node;
+  }
+  
+  let head = build(0, nums.length - 1);
+  return head;
+};

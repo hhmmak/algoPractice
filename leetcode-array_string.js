@@ -704,3 +704,28 @@ var search = function(nums, target) {
 
   return -1;
 };
+
+/*
+Product of Array Except Self
+*/
+
+var productExceptSelf = function(nums) {
+  if (nums.length === 2){
+    return [nums[1], nums[0]];
+  }
+  
+  let left = [1];
+  for (let i = 0; i < nums.length - 1; i++){
+    left.push(left[i] * nums[i]);
+  }
+  let right = [1];
+  for (let i = 0; i < nums.length - 1; i++){
+    right.unshift(right[0] * nums[nums.length - 1 - i]);
+  }
+  let result = [];
+  for (let i = 0; i < nums.length; i++){
+    result.push(left[i] * right[i]);
+  }
+  
+  return result;
+};

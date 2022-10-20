@@ -752,3 +752,31 @@ var maxSubArray = function(nums) {
   
   return max;
 };
+
+/*
+Maximum Product Subarray
+Given an integer array nums, find a contiguous non-empty subarray within the array that has the largest product, and return the product.
+The test cases are generated so that the answer will fit in a 32-bit integer.
+A subarray is a contiguous subsequence of the array.
+*/
+
+var maxProduct = function(nums) {
+  let prev = 1;
+  let max = nums[0];
+  
+  for (let i = 0; i < nums.length; i++){
+    let product = prev * nums[i];
+    max = Math.max(max, product);
+    prev = product || 1;
+  }
+  
+  prev = 1;
+  
+  for (let i = nums.length - 1; i >= 0; i--){
+    let product = prev * nums[i];
+    max = Math.max(max, product);
+    prev = product || 1;
+  }
+  
+  return max;
+};

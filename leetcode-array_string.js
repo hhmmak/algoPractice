@@ -838,3 +838,46 @@ var threeSum = function(nums) {
   }
   return result;
 };
+
+/*
+4Sum
+Given an array nums of n integers, return an array of all the unique quadruplets
+*/
+
+var fourSum = function(nums, target) {
+  nums.sort((a,b) => a - b);
+  let result = [];
+  
+  for (let a = 0; a < nums.length - 3; a++){
+    while (a > 0 && nums[a] === nums[a - 1]){
+      a ++;
+    }
+    let sumA = target - nums[a];
+    for (let b = a + 1; b < nums.length - 2; b++){
+      while (b > a + 1 && nums[b] === nums[b - 1]){
+        b ++;
+      }
+      let c = b + 1;
+      let d = nums.length - 1;
+      let sumB = sumA - nums[b];
+      while (c < d){
+        if (nums[c] + nums[d] > sumB){
+          d --;
+        } else if (nums[c] + nums[d] < sumB){
+          c ++;
+        } else {
+          result.push([nums[a], nums[b], nums[c], nums[d]])
+          c ++;
+          while (nums[c] === nums[c - 1]){
+            c ++;
+          }
+          d --;
+          while (nums[d] === nums[d + 1]){
+            d ++;
+          }
+        }
+      }
+    }
+  }
+  return result;
+};

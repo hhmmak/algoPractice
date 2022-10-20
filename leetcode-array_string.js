@@ -799,3 +799,42 @@ var findMin = function(nums) {
   }
   return nums[high];
 };
+
+/*
+3Sum
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0 (no duplicates).
+*/
+
+var threeSum = function(nums) {
+  nums.sort((a, b) => a - b);
+  let result = [];
+  
+  for (let first = 0; first < nums.length - 2; first ++){
+    if (first > 0 && nums[first] === nums[first - 1]){
+      continue;
+    }
+    let second = first + 1;
+    let third = nums.length - 1;
+    let map = {};
+    
+    while (second < third) {
+      let sum = nums[first] + nums[second] + nums[third];
+      if (sum < 0){
+        second ++;
+      } else if (sum > 0){
+        third --;
+      } else {
+        result.push([nums[first], nums[second], nums[third]])
+        second ++;
+        third --;
+        while (second < third && nums[second] === nums[second - 1]){
+          second ++;
+        }
+        while (second < third && nums[third] === nums[third + 1]){
+          third --;
+        }
+      }
+    }
+  }
+  return result;
+};

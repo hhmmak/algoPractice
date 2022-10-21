@@ -881,3 +881,39 @@ var fourSum = function(nums, target) {
   }
   return result;
 };
+
+/*
+Container With Most Water
+You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+Return the maximum amount of water a container can store.
+*/
+
+var maxArea = function(height) {
+  //area = (indexE - indexS) * Math.min(lineE, lineS)
+
+let indexS = 0;
+let indexE = height.length - 1;
+let lineS = height[indexS];
+let lineE = height[indexE];
+let lineMin = Math.min(lineS, lineE);
+let areaMax = (indexE - indexS) * lineMin;
+
+while (indexS < indexE){
+  while (indexS < indexE && lineMin >= height[indexE]){
+    indexE --;
+  }
+  while (indexS < indexE && lineMin >= height[indexS]){
+    indexS ++;
+  }
+  
+  lineS = height[indexS];
+  lineE = height[indexE];
+  lineMin = Math.min(lineS, lineE);
+  
+  areaMax = Math.max(areaMax, (indexE - indexS) * lineMin);
+  // console.log(indexS, indexE, lineS, lineE, areaMax)
+}
+
+return areaMax;
+};

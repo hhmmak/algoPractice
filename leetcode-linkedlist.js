@@ -690,3 +690,36 @@ var sortList = function(head) {
 
   return merge(sortList(head), sortList(slow));
 };
+
+/*
+Merge k Sorted Lists
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+Merge all the linked-lists into one sorted linked-list and return it.
+*/
+
+var mergeKLists = function(lists) {
+  lists = lists.filter(item => item !== null)
+  if (lists.length === 0) {
+    return null;
+  }
+  let head = new TreeNode(-1);
+  let node = head;
+  let haveNode = true;
+  
+  while (lists.length > 1){
+    let index = 0;
+    for (let i = 0; i < lists.length; i++){
+      if (lists[index].val > lists[i].val){
+        index = i;
+      }
+    }
+    node.next = lists[index];
+    node = node.next;
+    lists[index] =lists[index].next;
+    if (!lists[index]){
+      lists.splice(index, 1)
+    }
+  }
+  node.next = lists[0];
+  return head.next;
+};

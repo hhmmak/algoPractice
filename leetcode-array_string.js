@@ -890,30 +890,55 @@ Return the maximum amount of water a container can store.
 */
 
 var maxArea = function(height) {
-  //area = (indexE - indexS) * Math.min(lineE, lineS)
 
-let indexS = 0;
-let indexE = height.length - 1;
-let lineS = height[indexS];
-let lineE = height[indexE];
-let lineMin = Math.min(lineS, lineE);
-let areaMax = (indexE - indexS) * lineMin;
+  let indexS = 0;
+  let indexE = height.length - 1;
+  let lineS = height[indexS];
+  let lineE = height[indexE];
+  let lineMin = Math.min(lineS, lineE);
+  let areaMax = (indexE - indexS) * lineMin;
 
-while (indexS < indexE){
-  while (indexS < indexE && lineMin >= height[indexE]){
-    indexE --;
+  while (indexS < indexE){
+    while (indexS < indexE && lineMin >= height[indexE]){
+      indexE --;
+    }
+    while (indexS < indexE && lineMin >= height[indexS]){
+      indexS ++;
+    }
+    
+    lineS = height[indexS];
+    lineE = height[indexE];
+    lineMin = Math.min(lineS, lineE);
+    
+    areaMax = Math.max(areaMax, (indexE - indexS) * lineMin);
   }
-  while (indexS < indexE && lineMin >= height[indexS]){
-    indexS ++;
-  }
-  
-  lineS = height[indexS];
-  lineE = height[indexE];
-  lineMin = Math.min(lineS, lineE);
-  
-  areaMax = Math.max(areaMax, (indexE - indexS) * lineMin);
-  // console.log(indexS, indexE, lineS, lineE, areaMax)
-}
 
-return areaMax;
+  return areaMax;
+};
+
+/*
+Longest Repeating Character Replacement
+*/
+
+var characterReplacement = function(s, k) {
+  let map = {};
+  let maxLength = k;
+  
+  for (let i = 0; i < s.length - k; i ++){
+    let replace = k;
+    let j = i;
+    let length = 0;
+    while (j < s.length && (replace > 0 || s[j] === s[i])){
+      if (s[j] !== s[i]){
+        replace --;
+      } else if (j - i === 1){
+        i ++;
+      }
+      length ++;
+      j++;
+    }
+    length = Math.min(s.length, length + replace);
+    maxLength = Math.max(maxLength, length);
+  }
+  return maxLength;
 };

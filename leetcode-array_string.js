@@ -942,3 +942,51 @@ var characterReplacement = function(s, k) {
   }
   return maxLength;
 };
+
+/*
+Minimum Window Substring
+*/
+
+//Sliding window
+
+var minWindow = function(s, t) {
+  let map = {};
+  let search = t.length;
+  let minLength = s.length + 1;
+  for (let i = 0; i < search; i++){
+    map[t[i]] = (map[t[i]] || 0) + 1;
+  }
+  
+  let start = 0;
+  let end = 0;
+  let head = 0;
+
+  while (s.length > end){
+    if (map[s[end]] > 0){
+      search --;
+    }
+    if (map[s[end]] !== undefined){
+      map[s[end]] --;
+    }
+    end ++;
+    
+    let count = 0;
+    while (search === 0) {
+      
+      if (end - start < minLength){
+        minLength = end - start;
+        head = start;
+      }
+
+      if (map[s[start]] !== undefined) {
+        map[s[start]] ++;
+      }
+      if (map[s[start]] > 0) {
+        search ++;
+      }
+      start ++;
+    }
+  }
+  
+  return minLength === s.length + 1? "" : s.slice(head, head + minLength);
+};

@@ -990,3 +990,54 @@ var minWindow = function(s, t) {
   
   return minLength === s.length + 1? "" : s.slice(head, head + minLength);
 };
+
+/*
+Longest Palindromic Substring
+*/
+
+var longestPalindrome = function(s) {
+  if (s.length === 1){
+    return s;
+  }
+  
+  let start = 0;
+  let end = 1;
+  
+  let substring = s[0];
+  let maxLength = 1;
+  let head = 0;
+  
+  while (end < s.length){
+    let find = true;
+    while (end < s.length && find){
+      if (s[start] === s[end]){
+        find = false;
+        while (end < s.length && s[start] === s[end + 1]){
+          end ++;
+        }
+      } else if (end + 1 < s.length && s[start] === s[end + 1]){
+        find = false;
+        end = end + 1;
+      } else {
+        start ++;
+        end ++;
+      }
+    }
+    if (find){
+      return substring;
+    }
+
+    head = start + 1;
+    while(start >= 0 && end < s.length && s[start] === s[end]) {
+      if (end - start + 1 > maxLength) {
+        substring = s.slice(start, end + 1);
+        maxLength = end - start + 1;
+      }
+      start --;
+      end ++;
+    }
+    start = head;
+    end = start + 1;
+  }
+  return substring;
+};

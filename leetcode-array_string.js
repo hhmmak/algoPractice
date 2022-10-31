@@ -240,6 +240,34 @@ var spiralOrder = function (matrix) {
   return arr;
 };
 
+/*
+Rotate Image (Rotate Matrix)
+You are given an n x n 2D matrix representing an image, rotate the image by 90 degrees (clockwise).
+*/
+var rotate = function(matrix) {
+  let n = matrix.length;
+  let axis = (n - 1) / 2;
+  for (let i = 0; i < axis; i ++){
+    for (let j = i; j < n - i - 1; j++){
+      
+      let y = i;
+      let x = j;
+      let newY = y + (axis - y) * 2;
+      let prev = matrix[y][x];
+      
+      for (let count = 0; count < 4; count++){
+        let next = matrix[x][newY];
+        matrix[x][newY] = prev;
+        prev = next;
+        y = x;
+        x = newY;
+        newY = y + (axis - y) * 2;
+      }
+    }
+  }
+};
+
+
 /** 
  * .. Pascal Triangle 
 */

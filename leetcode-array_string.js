@@ -252,16 +252,15 @@ var rotate = function(matrix) {
       
       let y = i;
       let x = j;
-      let newY = y + (axis - y) * 2;
       let prev = matrix[y][x];
       
       for (let count = 0; count < 4; count++){
+        let newY = n - 1 - y;  //expension of y + (axis - y) * 2
         let next = matrix[x][newY];
         matrix[x][newY] = prev;
         prev = next;
         y = x;
-        x = newY;
-        newY = y + (axis - y) * 2;
+        x = newY; 
       }
     }
   }

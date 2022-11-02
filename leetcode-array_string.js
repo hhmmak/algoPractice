@@ -1120,3 +1120,36 @@ var wordBreak = function(s, wordDict) {
   }
   return mapS[s.length - 1];
 };
+
+/*
+Combination Sum IV
+Given an array of distinct integers nums and a target integer target, return the number of possible combinations that add up to target.
+*/
+
+var combinationSum4 = function(nums, target) {
+  nums.sort((a, b) => a - b);
+  let map = {};
+  
+  const sum = (total) => {
+    if (total === 0){
+      return 1;
+    }
+    if (total < nums[0]){
+      return 0;
+    }
+    if (map[total] !== undefined){
+      return map[total];
+    }
+    map[total] = 0;
+    for (let i = 0; i < nums.length; i++){
+      if (nums[i] > total){
+        break;
+      }
+      map[total] += sum(total - nums[i]);
+    }
+    // console.log(total, map[total])
+    return map[total];
+  }
+  
+  return sum(target);
+};

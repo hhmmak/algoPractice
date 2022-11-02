@@ -1094,3 +1094,29 @@ var maxProfit = function(prices) {
 
   return profit;
 };
+
+/*
+Word Break
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+*/
+
+var wordBreak = function(s, wordDict) {
+  let mapDict = {};
+  let mapS = {};
+  for (let i = 0; i < wordDict.length; i++){
+    mapDict[wordDict[i]] = true;
+  }
+  
+  for (let i = 0; i < s.length; i++){
+    mapS[i] = mapDict[s.slice(0, i + 1)]? true : false;
+    let j = i - 1;
+    while (j >= 0 && !mapS[i]){
+      if (mapS[j] && mapDict[s.slice(j + 1, i + 1)]){
+          mapS[i] = true;
+      }
+      j --;
+    }
+  }
+  return mapS[s.length - 1];
+};

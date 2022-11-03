@@ -1216,3 +1216,29 @@ var exist = function(board, word) {
   }
   return false;
 };
+
+/*
+House Robber
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you 
+from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses 
+were broken into on the same night.
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+*/
+
+var rob = function(nums) {
+
+  let map = {};
+  
+  const total = (idx) => {
+    if (idx >= nums.length){
+      return 0;
+    }
+    if (map[idx] === undefined){
+      map[idx] = nums[idx] + Math.max(total(idx + 2), total(idx + 3));
+    }
+    return map[idx];
+  }
+  
+  return Math.max(total(0), total(1));
+};

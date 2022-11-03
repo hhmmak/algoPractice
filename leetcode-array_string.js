@@ -1153,3 +1153,66 @@ var combinationSum4 = function(nums, target) {
   
   return sum(target);
 };
+
+/*
+Word Search
+Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are 
+horizontally or vertically neighboring. The same letter cell may not be used more than once.
+*/
+
+var exist = function(board, word) {
+  let m = board.length; // # of rows, y, i
+  let n = board[0].length;  //# of columns, x, j
+  let grid = m * n;
+  
+  let y = 0;
+  let x = 0;
+
+  
+  let i = 0;
+  while (i < grid){
+    let search = true;
+    while (search && i < grid){
+      if (board[Math.floor(i / n)][Math.floor(i % n)] === word[0]){
+        x = Math.floor(i % n);
+        y = Math.floor(i / n);
+        search = false;
+      }
+      i ++;
+    }
+    if (search === true){
+      return false;
+    }
+    
+    let map = new Array(m);
+    for (let i = 0; i < m; i++){
+      map[i] = new Array(n);
+      for (let j = 0; j < n; j ++){
+        map[i][j] = false;
+      }
+    }
+    
+    const searchNext = (y, x, idx, visited) => {
+      if (idx === word.length){
+        return true;
+      }
+      
+      if (y >= m || y < 0 || x >= n || x < 0
+        || visited[y][x] || word[idx] !== board[y][x]){
+        return false;
+      }
+
+      visited[y][x] = board[y][x];
+      let ans = searchNext(y + 1, x, idx + 1, visited) || searchNext(y, x + 1, idx + 1, visited) 
+        || searchNext(y - 1, x, idx + 1, visited) || searchNext(y, x - 1, idx + 1, visited);
+      visited[y][x] = false;
+      return ans;
+    };
+    
+    if (searchNext(y, x, 0, map)) {
+      return true;
+    }
+  }
+  return false;
+};

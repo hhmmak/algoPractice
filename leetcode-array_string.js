@@ -1242,3 +1242,31 @@ var rob = function(nums) {
   
   return Math.max(total(0), total(1));
 };
+
+/*
+House Robber II
+All houses at this place are arranged in a circle.
+*/
+var rob = function(nums) {
+  if (nums.length === 1){
+    return nums[0];
+  }
+  if (nums.length === 2){
+    return Math.max(nums[0], nums[1]);
+  }
+
+  const add = (start, end) => {
+    let sumMax = 0;
+    let sumPrev = 0;
+    
+    for (let i = start; i < end; i++){
+      let temp = sumMax;
+      sumMax = Math.max(sumMax, sumPrev + nums[i]);
+      sumPrev = temp;
+    }
+    
+    return sumMax;
+  }
+  
+  return Math.max(add(0, nums.length - 1), add(1, nums.length));
+};

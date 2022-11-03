@@ -1270,3 +1270,28 @@ var rob = function(nums) {
   
   return Math.max(add(0, nums.length - 1), add(1, nums.length));
 };
+
+/*
+Unique Paths
+*/
+
+var uniquePaths = function(m, n) {
+  let map = {};
+  let ans = 0;
+  
+  const walk = (y, x) => {
+    if (y === m - 1 && x === n - 1){
+      return 1;
+    }
+    if (y > m - 1 || x > n - 1){
+      return 0;
+    }
+    let grid = `${y},${x}`;
+    if (map[grid] !== undefined){
+      return map[grid];
+    }
+    map[grid] = walk(y + 1, x) + walk(y, x + 1);
+    return map[grid];
+  }
+  return walk(0, 0);
+};

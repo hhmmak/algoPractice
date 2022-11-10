@@ -503,3 +503,25 @@ var sortedArrayToBST = function(nums) {
   let head = build(0, nums.length - 1);
   return head;
 };
+
+/*
+Binary Tree Maximum Path Sum
+*/
+
+var maxPathSum = function(root) {
+  let max = -1000;
+  
+  let check = (node) => {
+    if (node === null){
+      return 0;
+    }
+    let left = check(node.left);
+    let right = check(node.right);
+
+
+    max = Math.max(max, left + right + node.val);
+    return Math.max(0, left + node.val, right + node.val);
+  }
+
+  return Math.max(check(root.left) + check(root.right) + root.val, max);
+};

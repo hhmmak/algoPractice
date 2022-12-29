@@ -347,6 +347,26 @@ var lowestCommonAncestor = function(root, p, q) {
   return root;
 };
 
+// third attempt
+var lowestCommonAncestor = function(root, p, q) {
+  // return truthy tree node only when p/q is found, else null (false) value will be passed on,
+  // if p/q is child node of the other one, will replace return tree node with the parent target node
+  if (root === p || root === q || root === null) {
+		return root;
+	}
+  let left = lowestCommonAncestor(root.left, p, q);
+  let right = lowestCommonAncestor(root.right, p, q);
+  
+  // found p and q respectively on left and right branch of root
+  if (left && right){
+		return root;
+	}
+  
+  // return result of child node search, if found lowest common ancestor(result) at left/right branch child node recursion search, will pass result back to tree root node run
+  return left || right;
+
+};
+
 /*
 Serialize and Deserialize Binary Tree
 */

@@ -723,3 +723,51 @@ var mergeKLists = function(lists) {
   node.next = lists[0];
   return head.next;
 };
+
+// Sort Doubly Linked List
+// 5 - 3 - 4 - 2 - 1 => 1 - 2 - 3 - 4 - 5 
+
+class Node {
+  constructor(val, prev, next){
+    this.val = val;
+    this.prev = prev;
+    this.next = next;
+  }
+}
+
+const sortDLL = (head) => {
+
+  let min = head;
+  let max = head;
+
+  let node = head.next;
+  let remain = head.next.next;
+
+  while (remain !== null){
+    if (node.val >= max.val){
+      max.next = node;
+      node.prev = max;
+      node.next = null;
+      max = node;
+    } else if (node.val <= min.val){
+      min.prev = node;
+      node.prev = null;
+      node.next = min;
+      min = node;
+    } else {
+      let pt = min;
+      while (min.next.val < node.val){
+        pt = pt.next;
+      }
+      let next = pt.next;
+      pt.next = node;
+      node.prev = pt;
+      node.next = next;
+      next.prev = node;
+    }
+    node = remain;
+    remain = node.next;
+  }
+
+  return head;
+}

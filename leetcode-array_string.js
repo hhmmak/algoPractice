@@ -997,20 +997,23 @@ var minWindow = function(s, t) {
     }
     end ++;
     
-    let count = 0;
+    // loop only when found any window substring of s, try to find smaller window with loop
     while (search === 0) {
-      
+      //update minLength and head (substring location) if found smaller window
       if (end - start < minLength){
         minLength = end - start;
         head = start;
       }
 
+      // stop increasing start position when char in s is found; i.e. window no longer valid
+      // update map and search count to found next end of window
       if (map[s[start]] !== undefined) {
         map[s[start]] ++;
       }
       if (map[s[start]] > 0) {
         search ++;
       }
+      
       start ++;
     }
   }

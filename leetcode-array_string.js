@@ -1322,3 +1322,32 @@ var canJump = function(nums) {
   }
   return true;
 };
+
+/*
+Minimum Rounds to Complete All Tasks
+You are given a 0-indexed integer array tasks, where tasks[i] represents the difficulty level of a task. 
+In each round, you can complete either 2 or 3 tasks of the same difficulty level.
+Return the minimum rounds required to complete all the tasks, or -1 if it is not possible to complete all the tasks.
+*/
+
+var minimumRounds = function(tasks) {
+  if (tasks.length === 1) return -1;
+
+  tasks.sort((a,b) => a - b); // Time: O(nlogn)
+  tasks.push(tasks[tasks.length - 1] + 1); // Dummy data to allow for loop to run once after array ends
+
+  let s = 0;
+  let count = 0;
+  
+  for (let i = 1; i < tasks.length; i++){
+    if (tasks[i] !== tasks[s]){
+      if (i - s === 1){
+        return -1;
+      }
+      // remainder will count as one extra round: remainder 1 -> 2+2tasks, remainder 2 -> 2+3tasks
+      count += Math.ceil((i - s) / 3); 
+      s = i;
+    }
+  }
+  return count;
+};

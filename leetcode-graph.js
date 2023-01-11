@@ -87,3 +87,44 @@ var canVisitAllRooms = function(rooms) {
 
   return visited.every(ele => ele);
 };
+
+/*
+Minimum Time to Collect All Apples in a Tree
+Given an undirected tree consisting of n vertices numbered from 0 to n-1, which has some apples in their vertices. You spend 1 second to walk 
+over one edge of the tree. 
+Return the minimum time in seconds you have to spend to collect all apples in the tree, starting at vertex 0 and coming back to this vertex.
+
+The edges of the undirected tree are given in the array edges, where edges[i] = [ai, bi] means that exists an edge 
+connecting the vertices ai and bi. Additionally, there is a boolean array hasApple, where hasApple[i] = true means that vertex i has an apple; 
+otherwise, it does not have any apple.
+*/
+
+var minTime = function(n, edges, hasApple) {
+  if (n === 1) return hasApple[0]? 2 : 0;
+  let tree = {};
+  createTree(edges, tree);
+  return findApple(0, tree, hasApple);
+};
+
+const findApple = (node, tree, hasApple, visited = {}) => {
+  if (visited[node]) return 0;
+  visited[node] = true;
+  if (tree[node] === undefined) return hasApple[node]? 2 : 0;
+  let sec = 0;
+
+  for (let branch of tree[node]){
+      sec += findApple(branch, tree, hasApple, visited);
+  }
+  if (node === 0) return sec;
+  if (sec === 0) return hasApple[node]? 2: 0;
+  return sec + 2;
+}
+
+const createTree = (edges, tree) => {
+  for (let [a,b] of edges){
+    if (tree[a] === undefined) tree[a] = [];
+    if (tree[b] === undefined) tree[b] = [];
+    tree[a].push(b);
+    tree[b].push(a);
+  }
+}

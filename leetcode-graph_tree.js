@@ -128,3 +128,41 @@ const createTree = (edges, tree) => {
     tree[b].push(a);
   }
 }
+
+/*
+Number of Nodes in the Sub-Tree With the Same Label
+*/
+
+var countSubTrees = function(n, edges, labels) {
+  let tree = createTree(edges);
+  let ans = new Array(n);
+
+  const check = (curr, prev) => {
+    let count = new Array(26);
+    count.fill(0);
+    for (let next of tree[curr]){
+      if (next !== prev){
+        let temp = check(next, curr);
+        for (let i = 0; i < 26; i++){
+          count[i] += temp[i];
+        }
+      }
+    }
+    count[labels.charCodeAt(curr) - 97] += 1
+    ans[curr] = count[labels.charCodeAt(curr) - 97];
+    return count;
+  }
+
+  check(0, null);
+  return ans;
+}
+
+const createTree = (edges, tree={}) => {
+  for (let [a,b] of edges){
+    if (tree[a] === undefined) tree[a] = [];
+    if (tree[b] === undefined) tree[b] = [];
+    tree[a].push(b);
+    tree[b].push(a);
+  }
+  return tree;
+}

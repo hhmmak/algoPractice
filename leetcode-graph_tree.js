@@ -112,6 +112,15 @@ const findApple = (node, tree, hasApple, visited = {}) => {
   if (tree[node] === undefined) return hasApple[node]? 2 : 0;
   let sec = 0;
 
+  const createTree = (edges, tree) => {
+    for (let [a,b] of edges){
+      if (tree[a] === undefined) tree[a] = [];
+      if (tree[b] === undefined) tree[b] = [];
+      tree[a].push(b);
+      tree[b].push(a);
+    }
+  }
+
   for (let branch of tree[node]){
       sec += findApple(branch, tree, hasApple, visited);
   }
@@ -120,14 +129,7 @@ const findApple = (node, tree, hasApple, visited = {}) => {
   return sec + 2;
 }
 
-const createTree = (edges, tree) => {
-  for (let [a,b] of edges){
-    if (tree[a] === undefined) tree[a] = [];
-    if (tree[b] === undefined) tree[b] = [];
-    tree[a].push(b);
-    tree[b].push(a);
-  }
-}
+
 
 /*
 Number of Nodes in the Sub-Tree With the Same Label
@@ -153,16 +155,17 @@ var countSubTrees = function(n, edges, labels) {
     return count;
   }
 
+  const createTree = (edges, tree={}) => {
+    for (let [a,b] of edges){
+      if (tree[a] === undefined) tree[a] = [];
+      if (tree[b] === undefined) tree[b] = [];
+      tree[a].push(b);
+      tree[b].push(a);
+    }
+    return tree;
+  }
+
   check(0, null);
   return ans;
 }
 
-const createTree = (edges, tree={}) => {
-  for (let [a,b] of edges){
-    if (tree[a] === undefined) tree[a] = [];
-    if (tree[b] === undefined) tree[b] = [];
-    tree[a].push(b);
-    tree[b].push(a);
-  }
-  return tree;
-}

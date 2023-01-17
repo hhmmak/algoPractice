@@ -1351,3 +1351,50 @@ var minimumRounds = function(tasks) {
   }
   return count;
 };
+
+/*
+Flip String to Monotone Increasing
+A binary string is monotone increasing if it consists of some number of 0's (possibly none), followed by some number of 1's (also possibly none).
+You are given a binary string s. You can flip s[i] changing it from 0 to 1 or from 1 to 0.
+Return the minimum number of flips to make s monotone increasing.
+*/
+
+var minFlipsMonoIncr = function(s) {
+
+  let flip = new Array(s.length);
+  for (let i = 0; i < s.length; i++){
+    flip[i] = [0,0];
+  }
+
+  let count0 = 0;
+  let count1 = 0;
+
+  let last0 = -1;
+  let first1 = -1;
+
+  let i = 0;
+  while (i < s.length && (last0 === -1 || first1 === -1)){
+    if (last0 === -1 && s[s.length - 1 - i] === "0") last0 = s.length - 1 - i;
+    if (first1 === -1 && s[i] === "1") first1 = i;
+    i ++;
+  }
+
+  for (let i = 0; i < s.length; i++){
+    if (s[i] === "1" && i <= last0){
+      count0 ++;
+    }
+    if (s[s.length - 1 - i] === "0" && s.length - 1 - i >= first1) {
+      count1 ++;
+    }
+    flip[i][0] = count0;
+    flip[s.length - 1 - i][1] = count1;
+  }
+
+  let minFlip = Math.min (flip[0][1], flip[s.length - 1][0]);
+
+  for (let i = 0; i < s.length - 1; i++){
+      minFlip = Math.min(flip[i][0] + flip[i + 1][1], minFlip);
+  }
+
+  return minFlip;
+};

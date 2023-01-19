@@ -1398,3 +1398,22 @@ var minFlipsMonoIncr = function(s) {
 
   return minFlip;
 };
+
+/*
+Subarray Sums Divisible by K
+*/
+
+var subarraysDivByK = function(nums, k) {
+  let ans = 0;
+  let mod = 0;
+  let remainder = new Array(k);
+  remainder[0] = 1;
+
+  for (let i = 0; i < nums.length ; i++){
+    mod = (mod + nums[i] % k + k) % k;
+    ans = ans + (remainder[mod] || 0);
+    remainder[mod] = (remainder[mod] || 0) + 1;
+  }
+
+  return ans;
+};

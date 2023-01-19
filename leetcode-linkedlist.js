@@ -771,3 +771,23 @@ const sortDLL = (head) => {
 
   return head;
 }
+
+/*
+Subarray Sum Equals K
+*/
+
+var subarraySum = function(nums, k) {
+  let n = nums.length;
+  let ans = 0;
+  let sum = 0;
+  let diff = {};
+  diff[0] = 1;
+
+  for (let num of nums){
+    sum += num;
+    ans += (diff[sum - k] || 0);
+    diff[sum] = (diff[sum] || 0) + 1;
+  }
+
+  return ans;
+};

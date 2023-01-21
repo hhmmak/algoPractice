@@ -1417,3 +1417,53 @@ var subarraysDivByK = function(nums, k) {
 
   return ans;
 };
+
+/*
+Restore IP Addresses
+A valid IP address consists of exactly four integers separated by single dots. Each integer is between 0 and 255 (inclusive) 
+and cannot have leading zeros.
+Given a string s containing only digits, return all possible valid IP addresses that can be formed by inserting dots into s. 
+You are not allowed to reorder or remove any digits in s. 
+*/
+
+var restoreIpAddresses = function(s) {
+  let part = 4;
+  let len = s.length;
+  let arr = s.split('');
+  let ans = [];
+
+  ans = separateParts(s, 4, 0);
+
+  return ans;
+};
+
+const separateParts = (s, part, start) => {
+  let remain = s.length - start;
+  if (part < 1 || remain > part * 3 || remain < part * 1) return [];
+  if (part === 1) {
+    let num = s.slice(start)
+    if ((s[start] === "0" && remain > 1 ) || Number(num) > 255) return [];
+    else  return [s.slice(start)];
+  }
+
+  let result = [];
+  if (s[start] === "0"){
+    let tempResult = separateParts(s, part - 1, start + 1);
+    for (let i = 0; i < tempResult.length; i++){
+      result.push("0" + "." + tempResult[i]);
+    }
+  } else {
+    for (let i = 1; i <= 3; i++){
+      let num = s.slice(start, start + i);
+      if (Number(num) > 255) continue;
+      let tempResult = separateParts(s, part - 1, start + i);
+      for (let j = 0; j < tempResult.length; j++){
+        if (tempResult[j].length > 0){
+          result.push(s.slice(start, start + i) + "." + tempResult[j]);
+        }
+      }
+    }
+  }
+
+  return result;
+};

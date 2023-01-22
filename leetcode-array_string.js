@@ -1440,10 +1440,11 @@ var restoreIpAddresses = function(s) {
 const separateParts = (s, part, start) => {
   let remain = s.length - start;
   if (part < 1 || remain > part * 3 || remain < part * 1) return [];
+
   if (part === 1) {
     let num = s.slice(start)
     if ((s[start] === "0" && remain > 1 ) || Number(num) > 255) return [];
-    else  return [s.slice(start)];
+    else  return [num];
   }
 
   let result = [];
@@ -1459,7 +1460,7 @@ const separateParts = (s, part, start) => {
       let tempResult = separateParts(s, part - 1, start + i);
       for (let j = 0; j < tempResult.length; j++){
         if (tempResult[j].length > 0){
-          result.push(s.slice(start, start + i) + "." + tempResult[j]);
+          result.push(num + "." + tempResult[j]);
         }
       }
     }

@@ -1468,3 +1468,41 @@ const separateParts = (s, part, start) => {
 
   return result;
 };
+
+/*
+Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+*/
+
+var partition = function(s) {
+  let map = {};
+  let ans = separateString(s, map);
+  return ans;
+};
+
+const separateString = (s, map) => {
+  if (s.length === 0) return [[]];
+  if (map[s]) return map[s];
+
+  let len = s.length;
+  let result = [];
+  for (let end = 0; end < len; end++){
+    if (checkPal(s, end)){
+      let str = s.slice(0, end + 1);
+      let strRemain = s.slice(end + 1);
+      let combination = separateString(strRemain, map);
+      for (let arr of combination){
+        result.push([str, ...arr])
+      }
+    }
+  }
+  map[s] = result;
+  return result;
+}
+
+const checkPal = (s, end) => {
+  for (let i = 0; i < end / 2; i ++){
+    if (s[i] !== s[end - i]) return false;
+  }
+  return true;
+}

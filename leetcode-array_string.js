@@ -1513,44 +1513,80 @@ Given an array of strings words (without duplicates), return all the concatenate
 A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
 */
 
+// var findAllConcatenatedWordsInADict = function(words) {
+
+//   let ans = [];
+  
+//   words.sort((a,b) => a.length - b.length);
+//   let start = words[0].length;
+//   let wordsMap = {};
+//   wordsMap[words[0]] = true;
+
+//   for(let i = 1; i < words.length; i++){
+//     if (checkConcat(wordsMap, start, words[i])) {
+//       ans.push(words[i]);
+//     }
+//     wordsMap[words[i]] = true;
+//   }
+
+//   return ans;
+// };
+
+// const createWordsMap = (words, wordsMap) => {
+//   for (let word of words){
+//     wordsMap[word] = word.length;
+//   }
+// }
+
+// const checkConcat = (wordsMap, start, word, index=0) => {
+
+//   if (index === word.length)  {
+//     return true;
+//   }
+
+//   for (let i = start + index; i <= word.length; i++){
+//     let subWord = word.slice(index, i);
+//     if (wordsMap[subWord] === true){
+//       if (checkConcat(wordsMap, start, word, i)) {
+//         return true;
+//     }
+//   }
+//   }
+//   return false;
+// }
+
+
 var findAllConcatenatedWordsInADict = function(words) {
 
   let ans = [];
   
   words.sort((a,b) => a.length - b.length);
   let start = words[0].length;
-  let wordsMap = {};
-  wordsMap[words[0]] = true;
+  // let wordsSet = {};
+  let wordsSet = new Set();
+  // wordsSet[words[0]] = true;
+  wordsSet.add(words[0]);
 
   for(let i = 1; i < words.length; i++){
-    if (checkConcat(wordsMap, start, words[i])) {
+    if (checkConcat(wordsSet, start, words[i])) {
       ans.push(words[i]);
     }
-    wordsMap[words[i]] = true;
+    // wordsSet[words[i]] = true;
+    wordsSet.add(words[i]);
   }
 
   return ans;
 };
 
-const createWordsMap = (words, wordsMap) => {
-  for (let word of words){
-    wordsMap[word] = word.length;
-  }
-}
-
-const checkConcat = (wordsMap, start, word, index=0) => {
-
-  if (index === word.length)  {
-    return true;
-  }
+const checkConcat = (wordsSet, start, word, index=0) => {
+  if (index === word.length)  return true;
 
   for (let i = start + index; i <= word.length; i++){
     let subWord = word.slice(index, i);
-    if (wordsMap[subWord] === true){
-      if (checkConcat(wordsMap, start, word, i)) {
+    if (wordsSet.has(subWord) && checkConcat(wordsSet, start, word, i)) {
+    // if (wordsSet[subWord] === true && checkConcat(wordsSet, start, word, i)) {
         return true;
     }
-  }
   }
   return false;
 }

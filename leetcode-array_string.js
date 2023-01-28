@@ -1506,3 +1506,51 @@ const checkPal = (s, end) => {
   }
   return true;
 }
+
+/*
+Concatenated Words
+Given an array of strings words (without duplicates), return all the concatenated words in the given list of words.
+A concatenated word is defined as a string that is comprised entirely of at least two shorter words in the given array.
+*/
+
+var findAllConcatenatedWordsInADict = function(words) {
+
+  let ans = [];
+  
+  words.sort((a,b) => a.length - b.length);
+  let start = words[0].length;
+  let wordsMap = {};
+  wordsMap[words[0]] = true;
+
+  for(let i = 1; i < words.length; i++){
+    if (checkConcat(wordsMap, start, words[i])) {
+      ans.push(words[i]);
+    }
+    wordsMap[words[i]] = true;
+  }
+
+  return ans;
+};
+
+const createWordsMap = (words, wordsMap) => {
+  for (let word of words){
+    wordsMap[word] = word.length;
+  }
+}
+
+const checkConcat = (wordsMap, start, word, index=0) => {
+
+  if (index === word.length)  {
+    return true;
+  }
+
+  for (let i = start + index; i <= word.length; i++){
+    let subWord = word.slice(index, i);
+    if (wordsMap[subWord] === true){
+      if (checkConcat(wordsMap, start, word, i)) {
+        return true;
+    }
+  }
+  }
+  return false;
+}

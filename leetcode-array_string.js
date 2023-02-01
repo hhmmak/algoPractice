@@ -1590,3 +1590,28 @@ const checkConcat = (wordsSet, start, word, index=0) => {
   }
   return false;
 }
+
+/* Greatest Common Divisor of Strings */
+
+var gcdOfStrings = function(str1, str2) {
+  let [len1, len2] = [str1.length, str2.length]
+
+  let lenAns = Math.min(len1, len2);
+
+  while (lenAns > 0){
+    while (len1 % lenAns || len2 % lenAns) lenAns --;
+    let start = 0;
+    let end = lenAns;
+    let ans = str1.slice(0, end);
+    while (end <= len1 || end <= len2){
+      if (end <= len1 && str1.slice(start, end) !== ans) return "";
+      if (end <= len2 && str2.slice(start, end) !== ans) return "";
+      start = end;
+      end += lenAns;
+    }
+    if (end > len1 && end > len2) return ans;
+    lenAns --;
+  }
+
+  return "";
+};

@@ -568,3 +568,28 @@ var maxPathSum = function(root) {
 
   return Math.max(check(root.left) + check(root.right) + root.val, max);
 };
+
+/*
+Minimum Distance Between BST Nodes
+Given the root of a Binary Search Tree (BST), return the minimum difference between the values of any two different nodes in the tree.
+*/
+
+var minDiffInBST = function(root) {
+
+  let result = Infinity;
+  let prev = null;
+
+  const inOrder = (node) => {
+    if (node === null)  return;
+    
+    inOrder(node.left);
+    if (prev !== null) {
+      result = Math.min(result, node.val - prev);
+    }
+    prev = node.val;
+    inOrder(node.right);
+  };
+
+  inOrder(root);
+  return result;
+};

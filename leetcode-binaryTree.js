@@ -593,3 +593,26 @@ var minDiffInBST = function(root) {
   inOrder(root);
   return result;
 };
+
+/*
+Check Completeness of a Binary Tree
+*/
+
+var isCompleteTree = function(root) {
+
+  if (root === null) return true;
+
+  let queue = [root];
+
+  while (queue[0] !== null){
+      let node = queue.shift();
+      queue.push(node.left);
+      queue.push(node.right);
+  }
+
+  while (queue[0] === null){
+      queue.shift();
+  }
+
+  return queue.length > 0 ? false : true;
+};

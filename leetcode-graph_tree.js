@@ -214,3 +214,52 @@ var closestMeetingNode = function(edges, node1, node2) {
 
   return result;
 };
+
+/*
+Reorder Routes to Make All Paths Lead to the City Zero
+There are n cities numbered from 0 to n - 1 and n - 1 roads such that there is only one way to travel between two different cities (this 
+network form a tree). Last year, The ministry of transport decided to orient the roads in one direction because they are too narrow.
+Roads are represented by connections where connections[i] = [ai, bi] represents a road from city ai to city bi.
+This year, there will be a big event in the capital (city 0), and many people want to travel to this city.
+Your task consists of reorienting some roads such that each city can visit the city 0. Return the minimum number of edges changed.
+It's guaranteed that each city can reach city 0 after reorder.
+*/
+
+var minReorder = function(n, connections) {
+  let graphTo = {}
+  let graphFrom = {}; 
+  let reorder = 0;
+  
+  for (let [a,b] of connections){
+      if (graphFrom[a] === undefined) graphFrom[a] = [];
+      if (graphTo[b] === undefined) graphTo[b] = [];
+      graphFrom[a].push(b);
+      graphTo[b].push(a);
+  }
+
+  // console.log(graphFrom, graphTo)
+
+  let visited = new Array(n)
+  let queue = [0];
+  while (queue.length > 0){
+      let city = queue.shift();
+      // console.log(city, graphTo[city])
+      if (graphTo[city]){        
+          for (let n of graphTo[city]){
+              if (visited[n] === undefined) queue.push(n);
+          }
+      }
+      if (graphFrom[city]){
+          for (let n of graphFrom[city]){
+              if (visited[n] === undefined){
+                  queue.push(n);
+                  reorder ++;
+              }
+          }
+      }
+      visited[city] = true;
+  }
+
+
+  return reorder;
+};

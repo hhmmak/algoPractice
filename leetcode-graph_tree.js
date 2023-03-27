@@ -263,3 +263,49 @@ var minReorder = function(n, connections) {
 
   return reorder;
 };
+
+/*
+  Count Unreachable Pairs of Nodes in an Undirected Graph
+*/
+
+var countPairs = function(n, edges) {
+  let graph = {};
+
+  for (let [a,b] of edges){
+      if (graph[a] === undefined) graph[a] = [];
+      if (graph[b] === undefined) graph[b] = [];
+      graph[a].push(b);
+      graph[b].push(a);
+  }
+
+  let visited = new Array(n);
+  let pairs = 0;
+
+  for (let i = 0; i < n; i ++){
+      if (visited[i] === undefined){
+          let neighborCount = 0;
+          if (graph[i]){
+              let queue = [i];
+              while (queue.length > 0){
+                  let node = queue.shift();
+                  if (visited[node] === undefined){
+                  for (let neighbor of graph[node]){
+                      if (visited[neighbor] === undefined){
+                          queue.push(neighbor);
+                      }
+                  }
+                  visited[node] = true;
+                  neighborCount ++;
+                  }
+              }
+
+              pairs += (n - neighborCount) * (neighborCount)
+          } else {
+
+              pairs += n - 1;
+          }
+      }
+      visited[i] = true;
+  }
+  return pairs / 2;
+};

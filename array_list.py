@@ -63,3 +63,22 @@ class Solution:
         
         else:
             return median
+
+
+    """ 1636. Sort Array by Increasing Frequency """
+
+    def frequencySort(self, nums: List[int]) -> List[int]:
+        # counter for frequency
+        map = {}
+
+        for num in nums:
+            if num not in map:
+                # use counter with 1000 increment to include the number itself such that if same frequency is compared, the number itself is compared in decending order
+                map[num] = 1000 + (100 - num)
+            else:
+                map[num] += 1000
+        
+        nums.sort(key=lambda num: map[num])
+
+        return nums
+    

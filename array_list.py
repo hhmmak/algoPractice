@@ -82,3 +82,23 @@ class Solution:
 
         return nums
     
+
+    """ 2206. Divide Array Into Equal Pairs """
+
+    def divideArray(self, nums: List[int]) -> bool:
+
+        nums.sort()
+        ptr = 0     # stores the current number being counted
+        is_odd_count = True
+        for num in nums:
+            if ptr != num:
+                ptr = num
+                # check if the counter of previous number is odd, i.e. cannot form pairs
+                if is_odd_count is False:
+                    return False
+                is_odd_count = False
+            else:
+                is_odd_count = not is_odd_count
+
+        return True
+    

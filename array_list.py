@@ -102,3 +102,43 @@ class Solution:
 
         return True
     
+    """ 2191. Sort the Jumbled Numbers """
+
+    def sortJumbled(self, mapping: List[int], nums: List[int]) -> List[int]:
+        mapped_nums = []
+        sorted_nums = []
+        map = {}
+
+        # map each number in nums
+        for idx in range(len(nums)):
+            num = nums[idx]
+            digit_cnt = 0
+            new_num = 0
+
+            if num == 0:
+                new_num = mapping[0]
+            else:
+                while num != 0:
+
+                    # replace digits with mapped value
+                    digit = num % 10
+                    new_num += mapping[digit] * (10 ** digit_cnt)
+
+                    # loop condition changes
+                    digit_cnt += 1
+                    num = math.floor(num / 10)
+
+            mapped_nums.append(new_num)
+            if new_num not in map:
+                map[new_num] = [idx]
+            else:
+                map[new_num].append(idx)
+        
+        mapped_nums.sort()
+
+        # create new list based on sorted num by mapping value
+        for mapped_num in mapped_nums:
+            mapped_idx = map[mapped_num].pop(0)
+            sorted_nums.append(nums[mapped_idx])
+            
+        return sorted_nums

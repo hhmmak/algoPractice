@@ -142,3 +142,37 @@ class Solution:
             sorted_nums.append(nums[mapped_idx])
             
         return sorted_nums
+    
+    """ Merge Sort """
+
+    def sortArray(self, nums: List[int]) -> List[int]:
+
+        def merge_sort(nums: List[int]) -> List[int]:
+            # base case
+            if len(nums) == 1:
+                return nums
+            
+            # divide arr to two parts and recursively sort the halved array
+            mid = math.floor(len(nums) / 2)
+            left_sorted = merge_sort(nums[:mid])
+            right_sorted = merge_sort(nums[mid:])
+
+            # sort and merge the two sorted halved array
+            sorted_arr = []
+            left_ptr, right_ptr = 0, 0
+            while (left_ptr < len(left_sorted) and right_ptr < len(right_sorted)):
+                if left_sorted[left_ptr] < right_sorted[right_ptr]:
+                    sorted_arr.append(left_sorted[left_ptr])
+                    left_ptr += 1
+                else:
+                    sorted_arr.append(right_sorted[right_ptr])
+                    right_ptr += 1
+            if left_ptr < len(left_sorted):
+                sorted_arr = sorted_arr + left_sorted[left_ptr:]
+            elif right_ptr < len(right_sorted):
+                sorted_arr = sorted_arr + right_sorted[right_ptr:]
+            
+            return sorted_arr
+        
+        return merge_sort(nums)
+    

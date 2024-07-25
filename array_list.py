@@ -176,3 +176,24 @@ class Solution:
         
         return merge_sort(nums)
     
+    """ 75. Sort Colors """
+
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        map = {
+            0: 0,
+            1: 0,
+            2: 0
+        }
+
+        for num in nums:
+                map[num] += 1
+        
+        color = 0
+        for idx in range(len(nums)):
+            while map[color] == 0:
+                color += 1
+            nums[idx] = color
+            map[color] -= 1

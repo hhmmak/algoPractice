@@ -197,3 +197,37 @@ class Solution:
                 color += 1
             nums[idx] = color
             map[color] -= 1
+
+    """ 1395. Count Number of Teams """
+    def numTeams(self, rating: List[int]) -> int:
+        length = len(rating)
+        result = 0
+
+        # set middle soldier (j) as ptr
+        # valid team definition:
+        #   any left soldier (i) with lower rating with any right soldier (k) with higher rating; or
+        #   any left solider (i) with higher rating with any right soldier (k) with lower rating
+
+        for j in range(1, length):
+            left_lower = left_higher = 0
+            right_higher = right_lower = 0
+
+            # separate left soldiers with higher/lower rating
+            for i in range(j):
+                if rating[j] > rating[i]:
+                    left_lower += 1
+                else: # elif rating[j] < rating[i]:
+                    left_higher += 1
+            
+            # separate right soldiers with higher/lower rating
+            for k in range(j + 1, length):
+                if rating[j] > rating [k]:
+                    right_lower += 1
+                else: # elif rating[j] < rating[k]:
+                    right_higher += 1
+            
+            
+            # multiplication to get all combinations of valid teams
+            result += left_lower * right_higher + left_higher * right_lower
+        
+        return result

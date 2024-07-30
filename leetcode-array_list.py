@@ -231,3 +231,26 @@ class Solution:
             result += left_lower * right_higher + left_higher * right_lower
         
         return result
+    
+    """ 1653. Minimum Deletions to Make String Balanced """
+
+    def minimumDeletions(self, s: str) -> int:
+
+        deletion = 0
+        b_cnt = 0
+        
+        # get the min deletion of each substring, i.e. s[:ch_idx]
+        for ch in s:
+            if ch == 'a':
+                # i.e. last character is an 'a', so to balance:
+                # either delete the newly included 'a' (previous needed deletion + 1 new deletion)
+                # or remove all the 'b's in the string (b_cnt)
+                # take the min between the two
+                deletion = min(deletion + 1, b_cnt)
+            else:   # elif ch == 'b':
+                # do not need to delete anything since 'b' is at the end of the string, i.e. deletion remains unchanged
+                # keep track of all 'b's in the string up to this point
+                b_cnt += 1
+
+        return deletion
+    

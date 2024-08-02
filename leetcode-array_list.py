@@ -253,4 +253,31 @@ class Solution:
                 b_cnt += 1
 
         return deletion
+
+    """ 2134. Minimum Swaps to Group All 1's Together """
+
+    def minSwaps(self, nums: List[int]) -> int:
+
+        nums_len = len(nums)
+        total_ones = 0
+
+        for num in nums:
+            total_ones += num
+
+        if total_ones <= 1 or total_ones >= nums_len - 1:
+            return 0
+        
+        count_ones = 0
+        for i in range(total_ones):
+            count_ones += nums[i]
+
+        max_count_ones = count_ones
+
+        # sliding window
+        for i in range(total_ones, nums_len + total_ones):
+            count_ones += nums[i % nums_len]
+            count_ones -= nums[(i - total_ones + nums_len) % nums_len]
+            max_count_ones = max(max_count_ones, count_ones)
+        
+        return total_ones - max_count_ones
     

@@ -281,3 +281,18 @@ class Solution:
         
         return total_ones - max_count_ones
     
+    """ 2053. Kth Distinct String in an Array """
+
+    def kthDistinct(self, arr: List[str], k: int) -> str:
+        arr_map = {}
+        for string in arr:
+            arr_map[string] = arr_map.get(string, 0) + 1
+        k_counter = k
+        for string in arr:
+            if arr_map[string] == 1:
+                k_counter -= 1
+                if k_counter == 0:
+                    return string
+        
+        return ""
+        

@@ -296,3 +296,35 @@ class Solution:
         
         return ""
         
+    """ 3016. Minimum Number of Pushes to Type Word II """
+    
+    def minimumPushes(self, word: str) -> int:
+
+        # total keys = 8 (2 to 9)
+        # minimum number => 
+        #   evenly divide the existing letters in the word to the 8 keys
+        #   most frequest character with less pushes
+
+        letters = [0] * 26
+
+        for character in word:
+            letters[ord(character) - ord('a')] += 1
+        
+        letters.sort(reverse=True)
+
+        total_pushes = 0
+        key_pushes = 1
+        count = 8
+        idx = 0
+
+        while idx < 26 and letters[idx] != 0 :
+            total_pushes += letters[idx] * key_pushes
+            count -= 1
+            if count == 0:
+                key_pushes += 1
+                count = 8
+            idx += 1
+
+        return total_pushes
+        
+        

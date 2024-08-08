@@ -8,7 +8,6 @@ class Solution:
     def luckyNumbers (self, matrix: List[List[int]]) -> List[int]:
         m, n = len(matrix), len(matrix[0])
         min_row = set()
-        max_col = set()
         lucky_num = []
 
         # store the min number in each row in a set
@@ -29,3 +28,44 @@ class Solution:
                 lucky_num.append(max_num)
 
         return lucky_num
+    
+    """ 885. Spiral Matrix III : return array for coordinates going clockwise spiral in matrix starting from specified cell """
+    
+    def spiralMatrixIII(self, rows: int, cols: int, rStart: int, cStart: int) -> List[List[int]]:
+
+        remaining = rows * cols - 1
+        direction = 4   # right -> down -> left -> up
+
+        r = rStart
+        c = cStart
+        result = [[r, c]]
+        move = count = 1
+        reset = 1   
+        # total move in same direction is same for two rounds
+        # + 1 to move when reset = 0
+        
+        while (remaining > 0):
+            if direction == 4:  #right
+                c += 1
+            if direction == 3:  #down
+                r += 1
+            if direction == 2:  #left
+                c -= 1
+            if direction == 1:  #up
+                r -= 1
+
+            # add coordinates if cell is in matrix
+            if (c >= 0 and c < cols and r >= 0 and r < rows):
+                result.append([r, c])
+                remaining -= 1
+
+            count -= 1
+            if count == 0:
+                direction = direction - 1 if direction > 1 else 4
+                count = move
+                reset -= 1
+                if reset == 0:
+                    move += 1
+                    reset = 2
+
+        return result

@@ -69,3 +69,56 @@ class Solution:
                     reset = 2
 
         return result
+
+    """ 840. Magic Squares In Grid """
+
+    def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
+
+        row = len(grid)
+        col = len(grid[0])
+
+        # check if any 3*3 grid exist
+        if row < 3 or col < 3:
+            return 0
+
+        # helper function to check if subgrid is a magic square
+        def isValid (r, c):
+            # 1. check if distict numbers from 1 - 9
+            not_distinct = [False] * 10
+
+            for x in range(3):
+                for y in range(3):
+                    if  grid[r-x][c-y] == 0 or grid[r-x][c-y] > 9 or not_distinct[grid[r-x][c-y]]:
+                        return False
+                    not_distinct[grid[r-x][c-y]] = True
+
+
+            # check if row sum equal
+            row_sum = grid[r][c-2] + grid[r][c-1] + grid[r][c]
+            for x in range(1,3):
+                if row_sum != grid[r-x][c-2] + grid[r-x][c-1] + grid[r-x][c]:
+                    return False
+            
+            # check if col sum equal
+            col_sum = grid[r-2][c] + grid[r-1][c] + grid[r][c]
+            for y in range(1,3):
+                if col_sum != grid[r-2][c-y] + grid[r-1][c-y] + grid[r][c-y]:
+                    return False 
+            
+            # check if diagonal sum equal
+            if (grid[r][c] + grid[r-2][c-2]) != (grid[r][c-2] + grid[r-2][c]):
+                return False
+
+            # all conditions checked out
+            return True
+
+
+        result = 0
+        
+        for r in range(2, row):
+            for c in range(2, col):
+                if isValid(r, c):
+                    result += 1
+
+        return result
+        

@@ -326,5 +326,35 @@ class Solution:
             idx += 1
 
         return total_pushes
-        
-        
+
+    """ 719. Find K-th Smallest Pair Distance """
+
+    def smallestDistancePair(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+
+        def count_pairs(distance_limit):
+            count = 0
+            left = 0
+            for right in range(len(nums)):
+                while nums[right] - nums[left] > distance_limit:
+                    left += 1
+                count += right - left
+            
+            return count
+
+        nums.sort()
+        min_distance, max_distance = 0, nums[-1] - nums[0]
+
+        while (min_distance < max_distance):
+            mid_distance = (min_distance + max_distance) // 2
+            total_pairs = count_pairs(mid_distance)
+            if total_pairs < k:
+                min_distance = mid_distance + 1
+            else:
+                max_distance = mid_distance
+
+        return min_distance

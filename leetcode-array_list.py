@@ -358,3 +358,36 @@ class Solution:
                 max_distance = mid_distance
 
         return min_distance
+    
+    """ 860. Lemonade Change """
+
+    def lemonadeChange(self, bills):
+        """
+        :type bills: List[int]
+        :rtype: bool
+        """
+        cashier = {
+            5: 0,
+            10: 0,
+            20: 0
+        }
+
+        for bill in bills:
+            change = bill - 5
+            if change % 10 == 5:
+                if cashier[5] == 0:
+                    return False
+                else:
+                    cashier[5] -= 1
+                    change -= 5
+            if change > 0:
+                if cashier[10] == 0:
+                    if cashier[5] < 2:
+                        return False
+                    else:
+                        cashier[5] -= 2
+                else:
+                    cashier[10] -= 1
+            cashier[bill] += 1
+        
+        return True

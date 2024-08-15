@@ -391,3 +391,58 @@ class Solution:
             cashier[bill] += 1
         
         return True
+
+    """ 2946. Matrix Similarity After Cyclic Shifts """
+
+    def areSimilar2(self, mat, k):
+        """
+        :type mat: List[List[int]]
+        :type k: int
+        :rtype: bool
+        """
+
+        row_len = len(mat[0])
+        k_fix = k % row_len
+
+        # return True when shifts create full rotation
+        if k_fix == 0:
+            return True
+
+        # check each row to see if shift row matches original row
+        for index, row in enumerate(mat):
+            idx_1 = 0
+            idx_2 = k_fix if index % 2 == 0 else row_len - k_fix
+            for shift in range(row_len):
+                if  row[idx_1 + shift] != row[(idx_2 + shift) % row_len]:
+                    return False
+        
+        return True
+    
+        """
+
+        row_len = len(mat[0])
+        k_per_row = [row_len] * len(mat)
+
+        # store the min shift required match original row  
+        for index, row in enumerate(mat):
+            start = 1
+            while start <= row_len // 2:
+                if row[0] == row[start]:
+                    if row_len % start == 0:
+                        check_1 = 0
+                        check_2 = start
+                        while check_2 < row_len and (row[check_1] == row[check_2]):
+                            check_1 += 1
+                            check_2 += 1
+                        if check_2 == row_len:
+                            k_per_row[index] = start
+                            start = check_2
+                start += 1
+
+        # check if shift will create same row, shift is multiple of min shift
+        for rot in k_per_row:
+            if k % rot != 0:
+                return False
+        
+        return True
+        """

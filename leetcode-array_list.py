@@ -446,3 +446,22 @@ class Solution:
         
         return True
         """
+
+    """ 624. Maximum Distance in Arrays """
+
+    def maxDistance(self, arrays):
+        """
+        :type arrays: List[List[int]]
+        :rtype: int
+        """
+
+        arrays.sort(key=lambda arr: arr[0])
+        
+        max_distance = 0
+        
+        for idx in range(1, len(arrays)):
+            max_distance = max(max_distance, arrays[idx][-1] - arrays[0][0])
+        
+        max_distance = max(max_distance, arrays[0][-1] - arrays[1][0])
+
+        return max_distance

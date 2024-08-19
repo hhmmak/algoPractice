@@ -21,3 +21,32 @@ class Solution(object):
             steps += quotient
         
         return steps
+    
+    """ 264. Ugly Number II """
+
+    def nthUglyNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        
+        num = 1
+        ugly = [1] * n
+        ptr = [0, 0, 0]
+        mul = [0, 0, 0]
+        prime = [2, 3, 5]
+
+        for num in range(1, n):
+            minimum = float('inf')
+            for i in range(3):
+                mul[i] = prime[i] * ugly[ptr[i]]
+                if mul[i] < minimum:
+                    minimum = mul[i]
+            
+            ugly[num] = minimum
+            for i in range(3):
+                if mul[i] == minimum:
+                    ptr[i] += 1
+
+        return ugly[n - 1]
+            

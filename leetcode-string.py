@@ -62,3 +62,46 @@ class Solution:
             thousandth += 1
 
         return result
+    
+    """ 592. Fraction Addition and Subtraction """
+
+    def fractionAddition(self, expression: str) -> str:
+        expression = expression + "+"
+        r_frac = [0,0,1]
+        t_frac = [1,0,0]
+        frac_ptr = 1
+        action = '+'
+        for ch in expression:
+            if ch.isnumeric():
+                t_frac[frac_ptr] = 10 * t_frac[frac_ptr] + int(ch)
+            elif ch == '/':
+                frac_ptr = 2
+            elif frac_ptr == 1:
+                t_frac[0] = -1
+            else:
+                # update numerator
+                if action == '+':
+                    r_frac[1] = r_frac[1] * t_frac[2] + r_frac[2] * t_frac[1] * t_frac[0]
+                else:   #   action == '-'
+                    r_frac[1] = r_frac[1] * t_frac[2] - r_frac[2] * t_frac[1] * t_frac[0]
+                # update denominator
+                r_frac[2] *= t_frac[2]
+                # special case: result is 0
+                if r_frac[1] == 0:
+                    r_frac[2] = 1
+                # reduce fraction
+                fac = 2
+                while fac <= (min(abs(r_frac[1]), r_frac[2]) + 1):
+                    while r_frac[1] % fac == 0 and r_frac[2] % fac == 0:
+                        r_frac[1] //= fac
+                        r_frac[2] //= fac
+                    fac += 1
+                # resets variables
+                action = ch
+                t_frac = [1,0,0]
+                frac_ptr = 1
+        
+
+        return f"{r_frac[1]}/{r_frac[2]}"
+
+            

@@ -121,4 +121,49 @@ class Solution:
                     result += 1
 
         return result
+
+    """ 1905. Count Sub Islands: island in grid2 is a subisland when it is part of an island in grid1 """
+
+    def countSubIslands(self, grid1: List[List[int]], grid2: List[List[int]]) -> int:
+        rows = len(grid2)
+        cols = len(grid2[0])
+        visited = [[False] * cols for _ in range(rows)]
+
+        result = 0
+
+        def findSubIsland (i, j):
+            # stop finding if out of bound or visited that part of the island already
+            if i < 0 or i >= rows or j < 0 or j >= cols or visited[i][j] == True:
+                return True
+            
+            visited[i][j] = True
+            
+            # stop finding if reached water
+            if grid2[i][j] == 0:
+                return True
+
+            # check if it is a sub-island
+            isSubIsland = True
+
+            if grid1[i][j] == 0:
+                isSubIsland = False
+            
+            # check around the island to see if it is still an island and whether it is a subisland
+            isSubIsland = findSubIsland(i + 1, j) and isSubIsland
+            isSubIsland = findSubIsland(i - 1, j) and isSubIsland
+            isSubIsland = findSubIsland(i, j + 1) and isSubIsland
+            isSubIsland = findSubIsland(i, j - 1) and isSubIsland
+
+            return isSubIsland
+
+
+
+        for row in range(rows):
+            for col in range(cols):
+                if not visited[row][col]:
+                    if grid2[row][col] == 1:
+                        if findSubIsland(row, col):
+                            result += 1
+
+        return result
         

@@ -104,4 +104,29 @@ class Solution:
 
         return f"{r_frac[1]}/{r_frac[2]}"
 
-            
+    """ 1422. Maximum Score After Splitting a String """
+
+    def maxScore(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+
+        left = 0
+        right = 0
+        result = 0
+
+        # count points if no split from the right, i.e. number of zeros
+        for ptr in range(len(s)):
+            if s[ptr] == '0':
+                left += 1
+        
+        # calculate and store max point when splitting from rightmost digit
+        for ptr in range(len(s) - 1, 0, -1):
+            if s[ptr] == '1':
+                right += 1
+            elif s[ptr] == '0':
+                left -= 1
+            result = max(result, left + right)
+        
+        return result

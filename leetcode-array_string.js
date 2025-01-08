@@ -1038,26 +1038,37 @@ var longestPalindrome = function(s) {
   let head = 0;
   
   while (end < s.length){
+
+    // find possible center of palindrome
     let find = true;
     while (end < s.length && find){
+      // palindrome with center pattern of "aa"
       if (s[start] === s[end]){
         find = false;
         while (end < s.length && s[start] === s[end + 1]){
           end ++;
         }
+
+      // palindrome with center pattern of "aba"
       } else if (end + 1 < s.length && s[start] === s[end + 1]){
         find = false;
-        end = end + 1;
+        end ++;
+
+      // the consecutive letters cannot form a palindrome
       } else {
         start ++;
         end ++;
       }
     }
+    // reached end of string and can no longer find palindrome
     if (find){
       return substring;
     }
 
+    // store next search start position
     head = start + 1;
+
+    // find longest possible palindrome from center and store if is larger than previous longest found 
     while(start >= 0 && end < s.length && s[start] === s[end]) {
       if (end - start + 1 > maxLength) {
         substring = s.slice(start, end + 1);
@@ -1066,6 +1077,8 @@ var longestPalindrome = function(s) {
       start --;
       end ++;
     }
+
+    // continue search
     start = head;
     end = start + 1;
   }
@@ -1614,4 +1627,29 @@ var gcdOfStrings = function(str1, str2) {
   }
 
   return "";
+};
+
+/**
+ * Count Prefix and Suffix Pairs I
+ * 
+ * @param {string[]} words
+ * @return {number}
+ */
+var countPrefixSuffixPairs = function(words) {
+
+  let result = 0
+  
+  for (let curr = 1; curr < words.length; curr ++){
+      for (let i = 0; i < curr; i ++){
+          let suffixStart = words[curr].length - words[i].length
+
+          if (words[curr].length >= words[i].length
+              && words[curr].indexOf(words[i]) === 0
+              && words[curr].includes(words[i], suffixStart)) {
+                  result ++
+          }
+      }
+  }
+
+  return result;
 };

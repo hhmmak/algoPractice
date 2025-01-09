@@ -1653,3 +1653,25 @@ var countPrefixSuffixPairs = function(words) {
 
   return result;
 };
+
+/**
+ * 1408. String Matching in an Array
+ * @param {string[]} words
+ * @return {string[]}
+ */
+var stringMatching = function(words) {
+  words.sort((a,b) => a.length - b.length)
+  let map = {}
+
+  for (let i = 1; i < words.length; i ++){
+      for (let j = 0; j < i; j ++){
+          if ( !map[words[j]]
+            && words[j].length <= words[i].length
+            && words[i].indexOf(words[j]) !== -1){
+              map[words[j]] = true
+          }
+      }
+  }
+
+  return Object.keys(map)
+};

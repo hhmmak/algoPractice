@@ -309,3 +309,77 @@ var countPairs = function(n, edges) {
   }
   return pairs / 2;
 };
+
+/**
+ * 
+ * 2115. Find All Possible Recipes from Given Supplies
+ * 
+ * @param {string[]} recipes
+ * @param {string[][]} ingredients
+ * @param {string[]} supplies
+ * @return {string[]}
+ */
+var findAllRecipes = function(recipes, ingredients, supplies) {
+  // initiate result list
+  let result = []
+  
+  // initiate adjacency list
+  let recipesList = {}
+  for (let i = 0; i < recipes.length; i++){
+      recipesList[recipes[i]] = ingredients[i]
+  }
+
+  // initiate available map
+  let available = {}
+  for (let supply of supplies){
+      available[supply] = true
+  }
+
+  // initiate unavailable map
+  let unavailable = {}
+
+  // keep track of dependent ingredient and avoid infinite loop
+  let visiting = {}
+
+  let canCreate = (recipe) => {
+      // if previously checked that can be created
+      if (available[recipe]) return true
+
+      if (visiting[recipe]) {
+          unavailable[recipe] = true
+          return false
+      }
+      
+      visiting[recipe] = true
+      let checklist = recipesList[recipe]
+      let remainingIngredient = checklist.length
+
+      for (let ingredient of checklist){
+          // ingredient is in supply or available to be created
+          if (available[ingredient]){
+              remainingIngredient --
+          // ingredient can be created
+          } else if (recipesList[ingredient] && !unavailable[recipe] && canCreate(ingredient)){
+              remainingIngredient --
+          }
+      }
+
+      // remove recipe from visiting as search is completed
+      visiting[recipe] = false
+      if (remainingIngredient > 0) {
+          unavailable[recipe] = true
+          return false
+      } 
+      
+      available[recipe] = true
+      return true
+  }
+
+  for (let recipe of recipes){
+      if (canCreate(recipe)){
+          result.push(recipe)
+      }
+  }
+
+  return result
+};

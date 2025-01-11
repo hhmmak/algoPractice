@@ -1675,3 +1675,46 @@ var stringMatching = function(words) {
 
   return Object.keys(map)
 };
+
+
+/**
+ * 1400. Construct K Palindrome Strings
+ * @param {string} s
+ * @param {number} k
+ * @return {boolean}
+ */
+var canConstruct = function(s, k) {
+
+  // main restriction to construction:
+  // 1. each single-out letter need to be in separate palindrome string
+  // 2. max palindrome strings = each character form it's own string
+
+  // check situation 2
+  if (k > s.length){
+      return false
+  }
+
+  let letterMap = new Array(26).fill(0)
+  let odd = 0
+
+  // map the count of each letter
+  for (let i = 0; i < s.length; i++){
+      let letter = s.charCodeAt(i) - 97
+      letterMap[letter] += 1
+  }
+
+  // check which letter has single-out count, i.e. odd no. count
+  for (let i = 0; i < 26; i++){
+      if (letterMap[i] % 2){
+          odd += 1
+      }
+  }
+
+  // check situation 1
+  if (odd > k){
+      return false
+  }
+
+  // can form k count of palindrome string
+  return true
+};

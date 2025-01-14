@@ -1718,3 +1718,33 @@ var canConstruct = function(s, k) {
   // can form k count of palindrome string
   return true
 };
+
+/**
+ * 2657. Find the Prefix Common Array of Two Arrays
+ * @param {number[]} A
+ * @param {number[]} B
+ * @return {number[]}
+ */
+var findThePrefixCommonArray = function(A, B) {
+  let n = A.length
+  let map = new Array(n + 1).fill(false)
+  let result = new Array(n).fill(0)
+  result[n - 1] = n
+  map[A[0]] = true
+  map[B[0]] = true
+  if (A[0] === B[0]){
+      result[0] = 1
+  }
+  for (let i = 1; i < n - 1; i++){
+      result[i] = result[i - 1]
+      if (map[A[i]]){
+          result[i] ++
+      }
+      map[A[i]] = true
+      if (map[B[i]]){
+          result[i] ++
+      }
+      map[B[i]] = true
+  }
+  return result
+};

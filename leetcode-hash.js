@@ -848,3 +848,50 @@ var leastInterval = function(tasks, n) {
   let minUnit = (maxRep - 1) * (n + 1) + maxTask;
   return Math.max(minUnit, tasks.length);
 };
+
+/**
+ * 
+ * 2661. First Completely Painted Row or Column
+ * @param {number[]} arr
+ * @param {number[][]} mat
+ * @return {number}
+ */
+var firstCompleteIndex = function(arr, mat) {
+  let result = 0
+  
+  let m = mat.length      // # of rows
+  let n = mat[0].length   // # or cols
+
+  // if there is only 1 col or 1 row, 1 integer will fill entire row/col
+  if (m == 1 || n == 1){
+      return 0
+  }
+  
+  let painted = new Array (m + n).fill(0) // first m = row index, last n = col index
+  let map = new Array (m * n + 1)
+
+  // map row and col of integer in mat
+  for (let i = 0; i < m; i++){
+      for (let j = 0; j < n; j++){
+          map[mat[i][j]] = [i, j]
+      }
+  }
+
+  for (let i = 0; i < arr.length; i++){
+      // fetch row and col of integer
+      let [y, x] = map[arr[i]]
+
+      // update count of painted boxes per row/col
+      painted[y] ++;
+      painted[m + x] ++;
+
+      // return index when entire row/col filled
+      if (painted[y] == n || painted[m + x] == m){
+          return i
+      }
+
+  }
+
+  // safety check, should not reach here
+  return result
+};

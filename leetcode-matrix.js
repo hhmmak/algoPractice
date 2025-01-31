@@ -37,3 +37,95 @@ var findMaxFish = function(grid) {
 
   return maxFish
 };
+
+/**
+ * 827. Making A Large Island
+ * @param {number[][]} grid
+ * @return {number}
+ */
+var largestIsland = function(grid) {
+  let visited = {}
+  let sizeMap = { 0: 0, 10 : 0 }
+  let label = 10
+  let n = grid.length
+  let maxIsland = 0
+
+  let getSide = (y,x) => {
+      if (y < 0 || y >= n || x < 0 || x >= n
+          || grid[y][x] === 0){
+              return 0
+      }
+      return grid[y][x]
+  }
+
+  let traverseIsland = (y, x) => {
+      if (y < 0 || y >= n || x < 0 || x >= n
+          || grid[y][x] == 0 || visited[`${y}_${x}`]){
+          return 0
+      }
+      visited[`${y}_${x}`] = true
+      
+      let size = traverseIsland(y + 1, x) + traverseIsland(y - 1, x)
+                  + traverseIsland(y, x + 1) + traverseIsland(y, x - 1)
+      grid[y][x] = label
+      return size + 1
+  }
+
+  let findMaxFlip = (y, x) => {
+      if (y < 0 || y >= n || x < 0 || x >= n
+          || grid[y][x]){
+              return 0
+      }
+      let size = 1
+      let labelMap = {}
+      let side1 = getSide(y + 1, x)
+      let side2 = getSide(y - 1, x)
+      let side3 = getSide(y, x + 1)
+      let side4 = getSide(y, x - 1)
+      if (!labelMap[side1]){
+          labelMap[side1] = true
+          size += sizeMap[side1]
+      }
+      if (!labelMap[side2]){
+          labelMap[side2] = true
+          size += sizeMap[side2]
+      }
+      if (!labelMap[side3]){
+          labelMap[side3] = true
+          size += sizeMap[side3]
+      }
+      if (!labelMap[side4]){
+          labelMap[side4] = true
+          size += sizeMap[side4]
+      }
+
+      return size
+  }
+
+  for (let i = 0; i < n; i++){
+      for (let j = 0; j < n; j++){
+          let size = traverseIsland(i,j)
+          if (size !== 0){
+              sizeMap[label] = size
+              label += 10
+          }
+      }
+  }
+
+  if (label === 10){
+      return 1
+  }
+
+  if (label === 20){
+      return Math.min(sizeMap[10] + 1, n * n)
+  }
+
+  for (let i = 0; i < n; i++){
+      for (let j = 0; j < n; j++){
+          let size = findMaxFlip(i, j)
+          maxIsland = Math.max(maxIsland, size)
+      }
+  }
+
+  return maxIsland
+};

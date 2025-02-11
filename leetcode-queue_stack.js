@@ -133,3 +133,27 @@ var numIslands = function(grid) {
 	return island;
 
 };
+
+/**
+ * 1910. Remove All Occurrences of a Substring
+ * @param {string} s
+ * @param {string} part
+ * @return {string}
+ */
+var removeOccurrences = function(s, part) {
+  let result = []
+  let potential = []
+  let startedPart = false
+  for (let i = 0; i < s.length; i++){
+      result.push(s[i])
+      if (s[i] == part[part.length - 1]){
+          if (result.length >= part.length){
+              if (result.slice(-part.length).join('') == part){
+                  result = result.slice(0, -part.length)
+              }
+          }
+      }
+  }
+
+  return result.join('')
+};

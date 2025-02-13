@@ -1748,3 +1748,34 @@ var findThePrefixCommonArray = function(A, B) {
   }
   return result
 };
+
+/**
+ * 3066. Minimum Operations to Exceed Threshold Value II
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var minOperations = function(nums, k) {
+  let minHeap = new MinPriorityQueue();
+
+  // push all num smaller than k to min-heap
+  nums.forEach(num => {
+      if (num < k) {   
+          minHeap.enqueue(num)
+      }
+  })
+  let result = 0;
+
+  while (minHeap.size() > 1) {
+      let x = minHeap.dequeue().element
+      let y = minHeap.dequeue().element
+      let temp = x * 2 + y
+      if (temp < k){
+          minHeap.enqueue(temp)
+      }
+      result ++
+  }
+
+  // if there is still num < k exisits, require 1 more operation
+  return minHeap.isEmpty()? result : result + 1
+};

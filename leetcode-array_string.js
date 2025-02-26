@@ -1779,3 +1779,24 @@ var minOperations = function(nums, k) {
   // if there is still num < k exisits, require 1 more operation
   return minHeap.isEmpty()? result : result + 1
 };
+
+/**
+ * 1749. Maximum Absolute Sum of Any Subarray
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxAbsoluteSum = function(nums) {
+  let maxSum = -Infinity;
+  let currMax = -Infinity;
+  let minSum = Infinity;
+  let currMin = Infinity;
+
+  for (const num of nums) {
+      currMax = Math.max(num, currMax + num);
+      currMin = Math.min(num, currMin + num);
+      maxSum = Math.max(maxSum, currMax);
+      minSum = Math.min(minSum, currMin);
+  }
+
+  return Math.max(Math.abs(maxSum), Math.abs(minSum));
+};

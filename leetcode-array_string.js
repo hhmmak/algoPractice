@@ -1800,3 +1800,34 @@ var maxAbsoluteSum = function(nums) {
 
   return Math.max(Math.abs(maxSum), Math.abs(minSum));
 };
+
+/**
+ * 2379. Minimum Recolors to Get K Consecutive Black Blocks
+ * @param {string} blocks
+ * @param {number} k
+ * @return {number}
+ */
+var minimumRecolors = function(blocks, k) {
+  let result = k
+  let countW = 0
+
+  for (let i = 0; i < k; i ++){
+      if (blocks[i] === 'W'){
+          countW ++;
+      }
+  }
+  
+  result = countW
+
+  for (let i = k; i < blocks.length; i ++){
+      if (blocks[i - k] === 'W'){
+          countW --
+      }
+      if (blocks[i] === 'W'){
+          countW ++
+      }
+      result = Math.min(result, countW)
+  }
+
+  return result
+};

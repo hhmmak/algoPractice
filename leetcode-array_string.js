@@ -1831,3 +1831,31 @@ var minimumRecolors = function(blocks, k) {
 
   return result
 };
+
+/**
+ * 1004. Max Consecutive Ones III
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var longestOnes = function(nums, k) {
+  let result = 0;
+  let leftPtr = 0;
+  let zeroRemain = k;
+  let count = 0
+
+  for (let rightPtr = 0; rightPtr < nums.length; rightPtr ++) {
+      if (nums[rightPtr] === 0){
+          zeroRemain --
+      }
+      // reset start of consecutive count if subarray is broken
+      while (zeroRemain < 0){
+          if (nums[leftPtr] === 0){
+              zeroRemain ++
+          }
+          leftPtr ++;
+      }
+      result = Math.max(result, rightPtr - leftPtr + 1)
+  }
+  return result
+};

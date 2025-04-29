@@ -1859,3 +1859,40 @@ var longestOnes = function(nums, k) {
   }
   return result
 };
+
+
+/**
+ * 2962. Count Subarrays Where Max Element Appears at Least K Times
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var countSubarrays = function(nums, k) {
+  let maxNum = 0
+
+  for (let num of nums){
+      if (maxNum < num){
+          maxNum = num
+      }
+  }
+  
+  let appeared = 0
+  let left = 0
+  let result = 0
+
+  for (let right = 0; right < nums.length; right ++){
+      if (nums[right] === maxNum){
+          appeared ++
+      }
+      while(appeared === k){
+          if (nums[left] === maxNum){
+              appeared --;
+          }
+          left ++
+      }
+      result += left
+
+  }
+
+  return result
+};

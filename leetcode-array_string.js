@@ -1896,3 +1896,18 @@ var countSubarrays = function(nums, k) {
 
   return result
 };
+
+/**
+ * 1295. Find Numbers with Even Number of Digits
+ * @param {number[]} nums
+ * @return {number}
+ */
+var findNumbers = function(nums) {
+  let result = 0;
+  for (let num of nums){
+      if (num.toString().length % 2 == 0){
+          result ++;
+      }
+  }
+  return result
+};

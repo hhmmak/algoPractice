@@ -47,3 +47,39 @@ var closestPrimes = function(left, right) {
 
   return result
 };
+
+/**
+ * 2094. Finding 3-Digit Even Numbers
+ * @param {number[]} digits
+ * @return {number[]}
+ */
+var findEvenNumbers = function(digits) {
+    let map = new Array(10).fill(0)
+    let result = []
+
+    digits.forEach(digit => {
+        map[digit] ++
+    })
+
+    for (let hundreth = 1; hundreth < 10; hundreth ++){
+        if (map[hundreth]){
+            map[hundreth] --;
+            for (let tenth = 0; tenth < 10; tenth ++){
+                if (map[tenth]){
+                    map[tenth] --;
+                    for(let unit = 0; unit < 10; unit +=2 ){
+                        if (map[unit]){
+                            map[unit]--;
+                            result.push(100 * hundreth + 10 * tenth + unit)
+                            map[unit] ++;
+                        }
+                    }
+                    map[tenth] ++;
+                }
+            }
+            map[hundreth]++
+        }
+    }
+
+    return result
+};

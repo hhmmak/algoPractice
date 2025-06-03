@@ -383,3 +383,64 @@ var findAllRecipes = function(recipes, ingredients, supplies) {
 
   return result
 };
+
+/**
+ * 1298. Maximum Candies You Can Get from Boxes
+ * @param {number[]} status
+ * @param {number[]} candies
+ * @param {number[][]} keys
+ * @param {number[][]} containedBoxes
+ * @param {number[]} initialBoxes
+ * @return {number}
+ */
+var maxCandies = function(status, candies, keys, containedBoxes, initialBoxes) {
+    let numOfBoxes = status.length;
+    let visited = new Array(numOfBoxes).fill(false);
+    let hasKeys = [...status];
+    let queue = [];
+    let inQueue = new Array(numOfBoxes).fill(false);
+
+    for (let box of initialBoxes) {
+        queue.push(box);
+        inQueue[box] = true;
+    }
+
+    let totalCandies = 0;
+    let openedNewBox = true
+
+    while (queue.length && openedNewBox) {
+        openedNewBox = false;
+        let size = queue.length;
+
+        // go through entire queue
+        for (let i = 0; i < size; i++) {
+            let currentBox = queue.shift();
+
+            // push box back to queue if no keys 
+            if (!hasKeys[currentBox]) {
+                queue.push(currentBox);
+            
+            // work on box in queue that is not visited
+            } else if (!visited[currentBox]) {
+
+                openedNewBox = true;
+                visited[currentBox] = true;
+
+                totalCandies += candies[currentBox];
+
+                for (let key of keys[currentBox]) {
+                    hasKeys[key] = 1;
+                }
+
+                for (let box of containedBoxes[currentBox]) {
+                    if (!inQueue[box]) {
+                        queue.push(box);
+                        inQueue[box] = true;
+                    }
+                }
+            }
+        }
+    }
+
+    return totalCandies;
+};

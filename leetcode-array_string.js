@@ -1911,3 +1911,30 @@ var findNumbers = function(nums) {
   }
   return result
 };
+
+/**
+ * 3355. Zero Array Transformation I
+ * @param {number[]} nums
+ * @param {number[][]} queries
+ * @return {boolean}
+ */
+var isZeroArray = function(nums, queries) {
+    let map = new Array(nums.length + 1)
+    map.fill(0)
+
+    for (let query of queries){
+        map[query[0]] ++;
+        map[query[1] + 1] --;
+    }
+
+    let totalDecrement = 0;
+    for (let i = 0; i < nums.length; i++){
+        totalDecrement += map[i]
+        if (totalDecrement < nums[i]){
+            return false
+        }
+    }
+
+    return true
+
+};

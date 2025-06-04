@@ -1938,3 +1938,34 @@ var isZeroArray = function(nums, queries) {
     return true
 
 };
+
+
+/**
+ * 3403. Find the Lexicographically Largest String From the Box I
+ * @param {string} word
+ * @param {number} numFriends
+ * @return {string}
+ */
+var answerString = function(word, numFriends) {
+    if (numFriends === 1){
+        return word
+    }
+
+    let maxWordLength = word.length - numFriends + 1
+    let largestStart = 0
+    for (let i = 1; i < word.length; i ++){
+            let j = 0
+            while (i + j < word.length && word[largestStart + j] == word[i + j]){
+                j ++
+            }
+            if (i + j < word.length && word[largestStart + j] < word[i + j]){
+                let oldLargestStart = largestStart;
+                largestStart = i
+                i = Math.max(i, oldLargestStart + j )
+            } else {
+                i = i + j
+            }
+    }
+
+    return word.slice(largestStart, largestStart + maxWordLength)
+};

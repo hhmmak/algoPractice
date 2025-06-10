@@ -1969,3 +1969,31 @@ var answerString = function(word, numFriends) {
 
     return word.slice(largestStart, largestStart + maxWordLength)
 };
+
+
+/**
+ * 3442. Maximum Difference Between Even and Odd Frequency I
+ * @param {string} s
+ * @return {number}
+ */
+var maxDifference = function(s) {
+    let map = new Array(26).fill(0)
+
+    for (let i = 0; i < s.length; i++) {
+        map[s.charCodeAt(i) - "a".charCodeAt(0)] ++;
+    }
+
+    let maxOdd = 0
+    let minEven = 100
+    map.forEach(count => {
+        if (count % 2 && count > maxOdd){
+            maxOdd = count
+        } else if (count % 2 === 0 && count > 1 && count < minEven) {
+            minEven = count
+        }
+    })
+
+
+    return maxOdd - minEven
+
+};

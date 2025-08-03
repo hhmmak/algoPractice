@@ -1997,3 +1997,53 @@ var maxDifference = function(s) {
     return maxOdd - minEven
 
 };
+
+
+/**
+ * 2561. Rearranging Fruits
+ * @param {number[]} basket1
+ * @param {number[]} basket2
+ * @return {number}
+ */
+var minCost = function(basket1, basket2) {
+    // important note: number of swaps does not matter, only the cost matters;
+    // therefore can do a direct swap between two fruits or use min cost fruit
+    // as intermediator to swap two fruits (swap back and forth = 2 swaps as
+    // total cost)
+    
+    let diffFreq = {}
+    let minFruitCost = Infinity
+
+    // get difference in frequency and minimum fruit cost of all fruits
+    for (let i = 0; i < basket1.length; i++){
+        diffFreq[basket1[i]] = (diffFreq[basket1[i]] ?? 0) + 1 
+        diffFreq[basket2[i]] = (diffFreq[basket2[i]] ?? 0) - 1
+        minFruitCost = Math.min(basket1[i], basket2[i], minFruitCost)
+    }
+
+    let fruitToSwap = []
+    let result = 0
+    
+    // check if basket can be equal and get all fruits needed to be swapped
+    for (let [fruitCost, freq] of Object.entries(diffFreq)){
+        if (freq % 2 !== 0){
+            result = -1
+        } else {
+            for (let j = 0; j < Math.abs(freq / 2); j++){
+                fruitToSwap.push(parseInt(fruitCost))
+            }
+        }
+    }
+
+    if (result === -1){
+        return result
+    }
+
+    fruitToSwap.sort((a, b) => a - b)
+
+    for (let i = 0; i < fruitToSwap.length / 2; i++){
+        result += Math.min(2 * minFruitCost, fruitToSwap[i])
+    }
+    
+    return result;
+};

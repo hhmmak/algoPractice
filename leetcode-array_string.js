@@ -2047,3 +2047,41 @@ var minCost = function(basket1, basket2) {
     
     return result;
 };
+
+/**
+ * 966. Vowel Spellchecker
+ * @param {string[]} wordlist
+ * @param {string[]} queries
+ * @return {string[]}
+ */
+var spellchecker = function(wordlist, queries) {
+    let wordNoVowelSet = {}
+    let wordCaselessSet = {}
+    let wordSet = {}
+    let result = []
+
+    for (let i = wordlist.length - 1; i >= 0; i--){
+        let word = wordlist[i]
+        wordSet[word] = true
+        let wordCaseless = word.toLowerCase()
+        wordCaselessSet[wordCaseless] = i
+        let wordNoVowel = wordCaseless.replace(/[aeiou]/gi, '1');
+        wordNoVowelSet[wordNoVowel] = i
+    }
+
+    queries.forEach(query => {
+        let queryCaseless = query.toLowerCase()
+        let queryNoVowel = queryCaseless.replace(/[aeiou]/gi, '1');
+        if (wordSet[query]){
+            result.push(query)
+        } else if (!isNaN(wordCaselessSet[queryCaseless])) {
+            result.push(wordlist[wordCaselessSet[queryCaseless]])
+        } else if (!isNaN(wordNoVowelSet[queryNoVowel])){
+            result.push(wordlist[wordNoVowelSet[queryNoVowel]])
+        } else {
+            result.push("")
+        }
+    })
+
+    return result
+};

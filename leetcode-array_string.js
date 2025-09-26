@@ -2085,3 +2085,28 @@ var spellchecker = function(wordlist, queries) {
 
     return result
 };
+
+/**
+ * 611. Valid Triangle Number
+ * @param {number[]} nums
+ * @return {number}
+ */
+var triangleNumber = function(nums) {
+    nums.sort((a, b) => a - b);
+    let n = nums.length;
+    let count = 0;
+
+    for (let ptr3 = n - 1; ptr3 >= 2; ptr3--) {
+        let ptr1 = 0;
+        let ptr2 = ptr3 - 1;
+        while (ptr1 < ptr2) {
+            if (nums[ptr1] + nums[ptr2] > nums[ptr3]) {
+                count += (ptr2 - ptr1);
+                ptr2--;
+            } else {
+                ptr1++;
+            }
+        }
+    }
+    return count;
+};

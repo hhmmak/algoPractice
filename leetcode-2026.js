@@ -41,3 +41,39 @@ var maxLevelSum = function(root) {
     }
     return maxLevel
 };
+
+
+/**
+ * 1339. Maximum Product of Splitted Binary Tree
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxProduct = function(root) {
+    let result = 0
+    let totalSum = 0
+
+    let findSums = (root) => {
+        if (!root){
+            return 0
+        }
+        let sum = root.val
+        sum += findSums(root.left)
+        sum += findSums(root.right)
+        if (totalSum){
+            result = Math.max(result, (totalSum - sum) * sum)
+        }
+        return sum
+    }
+
+    totalSum = findSums(root)
+    findSums(root)
+    return result % (10**9 + 7)
+};

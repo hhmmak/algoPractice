@@ -77,3 +77,33 @@ var maxProduct = function(root) {
     findSums(root)
     return result % (10**9 + 7)
 };
+
+/**
+ * 1458. Max Dot Product of Two Subsequences
+ * @param {number[]} nums1
+ * @param {number[]} nums2
+ * @return {number}
+ */
+var maxDotProduct = function(nums1, nums2) {
+
+    let rows = nums1.length
+    let columns = nums2.length
+
+    let dotProds = new Array(columns + 1)
+    for (let i = 0; i <= columns; i++){
+        dotProds[i] = new Array(rows + 1).fill(-Infinity)
+    }
+
+    for (let i = 1; i <= columns; i++){
+        for (let j = 1; j <= rows; j++){
+            dotProds[i][j] = Math.max(
+                nums2[i-1] * nums1[j-1] + dotProds[i-1][j-1],
+                nums2[i-1] * nums1[j-1],
+                dotProds[i-1][j],
+                dotProds[i][j-1]
+            )
+        }
+    }
+    console.log(dotProds)
+    return dotProds[columns][rows]
+};

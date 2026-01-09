@@ -107,3 +107,35 @@ var maxDotProduct = function(nums1, nums2) {
     console.log(dotProds)
     return dotProds[columns][rows]
 };
+
+/**
+ * 865. Smallest Subtree with all the Deepest Nodes
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var subtreeWithAllDeepest = function(root) {
+    let maxDepth = 0
+    let result = null
+    let dfs = (node, depth) => {
+        maxDepth = Math.max(maxDepth,depth)
+        if (!node){
+            return depth
+        }
+        let leftDepth = dfs(node.left, depth + 1)
+        let rightDepth = dfs(node.right, depth + 1)
+        if (leftDepth === rightDepth && leftDepth === maxDepth){
+            result = node
+        }
+        return Math.max(leftDepth, rightDepth)
+    }
+    dfs(root, 0)
+    return result;
+};

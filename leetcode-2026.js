@@ -139,3 +139,31 @@ var subtreeWithAllDeepest = function(root) {
     dfs(root, 0)
     return result;
 };
+
+
+/**
+ * 875. Koko Eating Bananas
+ * @param {number[]} piles
+ * @param {number} h
+ * @return {number}
+ */
+var minEatingSpeed = function(piles, h) {
+    let low = 0
+    let high = Math.max(...piles)
+
+    let totalHoursNeeded = (bananas) => {
+        return piles.reduce((accumulatedHours, pile) => {
+            return accumulatedHours + Math.ceil(pile / bananas)
+        }, 0)
+    }
+
+    while (low < high) {
+        let mid = Math.floor((low + high) / 2)
+        if (totalHoursNeeded(mid) <= h) {
+            high = mid
+        } else {
+            low = mid + 1
+        }
+    }
+    return high
+};

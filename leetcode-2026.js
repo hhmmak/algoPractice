@@ -167,3 +167,51 @@ var minEatingSpeed = function(piles, h) {
     }
     return high
 };
+
+/**
+ * 1482. Minimum Number of Days to Make m Bouquets
+ * @param {number[]} bloomDay
+ * @param {number} m
+ * @param {number} k
+ * @return {number}
+ */
+var minDays = function(bloomDay, m, k) {
+    let n = bloomDay.length;
+
+    if (n < m * k){
+        return -1
+    }
+
+    const bouquetsAvailable = (day) => {
+        let collectedFlowers = 0
+        let bouquets = 0
+        for (let i = 0; i < n; i++){
+            if (bloomDay[i] <= day) {
+                collectedFlowers ++
+                if (collectedFlowers === k) {
+                    collectedFlowers = 0;
+                    bouquets ++
+                }
+            } else {
+                collectedFlowers = 0
+            }
+            
+        }
+        return bouquets
+    }
+
+    let low = Math.min(...bloomDay);
+    let high = Math.max(...bloomDay);
+    let highest = high;
+
+    while (low < high) {
+        let mid = Math.floor((low + high) / 2);
+        if (bouquetsAvailable(mid) < m){
+            low = mid + 1
+        } else {
+            high = mid
+        }
+    }
+
+    return high
+};

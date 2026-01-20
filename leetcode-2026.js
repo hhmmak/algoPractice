@@ -215,3 +215,31 @@ var minDays = function(bloomDay, m, k) {
 
     return high
 };
+
+/**
+ * 1283. Find the Smallest Divisor Given a Threshold
+ * @param {number[]} nums
+ * @param {number} threshold
+ * @return {number}
+ */
+var smallestDivisor = function(nums, threshold) {
+    let sumDivision = (divisor) => {
+        return nums.reduce((sums, num) => {
+            return sums + Math.ceil(num / divisor)
+        }, 0)
+        
+    }
+
+    let low = 1;
+    let high = Math.max(... nums)
+
+    while (low < high){
+        let mid = Math.floor((low + high) / 2)
+        if (sumDivision(mid) > threshold){
+            low = mid + 1
+        } else {
+            high = mid
+        }
+    }
+    return high
+};

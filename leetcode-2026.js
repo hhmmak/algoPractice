@@ -243,3 +243,35 @@ var smallestDivisor = function(nums, threshold) {
     }
     return high
 };
+
+/**
+ * 1760. Minimum Limit of Balls in a Bag
+ * @param {number[]} nums
+ * @param {number} maxOperations
+ * @return {number}
+ */
+var minimumSize = function(nums, maxOperations) {
+    const operationsNeeded = (maxInBag) => {
+        let operations = 0;
+        nums.forEach((balls) => {
+            if (balls > maxInBag) {
+                operations += Math.ceil(balls / maxInBag) - 1
+            }
+        })
+        return operations
+    }
+
+    let low = 0;
+    let high = Math.max(...nums)
+
+    while (low < high){
+        let mid = Math.floor ((low + high) / 2)
+        if (operationsNeeded(mid) > maxOperations) {
+            low = mid + 1
+        } else {
+            high = mid
+        }
+    }
+
+    return high
+};

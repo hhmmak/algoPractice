@@ -275,3 +275,77 @@ var minimumSize = function(nums, maxOperations) {
 
     return high
 };
+
+/**
+ * 410. Split Array Largest Sum
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var splitArray = function(nums, k) {
+    const subArrayNeeded = (sum) => {
+        let subArray = 1;
+        let subSum = 0;
+        nums.forEach((num) => {
+            if (subSum + num > sum){
+                subSum = 0;
+                subArray++;
+            }
+            subSum += num
+        })
+
+        return subArray
+    }
+
+    let low = Math.max(...nums)
+    let high = nums.reduce((sum, num) => sum + num, 0)
+
+    while (low < high) {
+        let mid = Math.floor((low + high) / 2)
+        if (subArrayNeeded(mid) > k){
+            low = mid + 1
+        } else {
+            high = mid
+        }
+    }
+
+    return high
+};
+
+/**
+ * 1552. Magnetic Force Between Two Balls
+ * @param {number[]} position
+ * @param {number} m
+ * @return {number}
+ */
+var maxDistance = function(position, m) {
+    position.sort((a,b) => b - a)
+    const canFitBalls = (force) => {
+        let balls = 1;
+        let distance = 0;
+        let i = 1;
+        while(i < position.length && balls < m) {
+            distance += (position[i - 1] - position[i])
+            if (distance >= force){
+                balls++
+                distance = 0
+            }
+            i++
+        }
+        return balls === m;
+    }
+
+    let low = 1;
+    let high = Math.max(...position) - 1
+
+    while (low < high) {
+        let mid = Math.ceil((low + high) / 2)
+        if (canFitBalls(mid)){
+            low = mid
+        } else {
+            high = mid - 1
+        }
+    }
+
+    return low
+};

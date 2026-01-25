@@ -349,3 +349,38 @@ var maxDistance = function(position, m) {
 
     return low
 };
+
+/**
+ * 1877. Minimize Maximum Pair Sum in Array
+ * @param {number[]} nums
+ * @return {number}
+ */
+var minPairSum = function(nums) {
+    nums.sort((a,b) => a - b)
+    
+    let maxSum = nums[nums.length - 1] + nums[0]
+    for (let i = 1; i < nums.length / 2; i++){
+        maxSum = Math.max(maxSum, nums[nums.length - (i + 1)] + nums[i])
+    }
+    return maxSum
+};
+
+/**
+ * 1984. Minimum Difference Between Highest and Lowest of k Scores
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var minimumDifference = function(nums, k) {
+    if (nums.length < k){
+        return 0
+    }
+    nums.sort((a,b) => a - b)
+    let diff = nums[k - 1] - nums[0]
+
+    for (let i = k; i < nums.length; i++){
+        diff = Math.min(diff, nums[i] - nums[i - (k - 1)])
+    }
+
+    return diff
+};
